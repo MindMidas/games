@@ -1,0 +1,26 @@
+{
+  "name": "games-frontend",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "npm run clean:js && tsc --project tsconfig.json && node scripts/normalize-js-output.mjs",
+    "clean:js": "find static/games -type f -name '*.js' -delete && find static/games -type f -name '*.js.map' -delete",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "lint": "eslint src/client --max-warnings 0",
+    "format": "prettier --write \"src/client/**/*.ts\"",
+    "build:css": "npm run build:css:pool && npm run build:css:chezz && node scripts/build-shared-css.mjs",
+    "build:css:pool": "tailwindcss -i ./src/css/pool.css -o ./static/css/pool-tailwind.css",
+    "build:css:chezz": "tailwindcss -i ./src/css/chezz.css -o ./static/css/chezz-tailwind.css",
+    "test": "npm run typecheck"
+  },
+  "devDependencies": {
+    "eslint": "^9.25.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.32.0"
+  }
+}

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# Install server prerequisites, prepare a local env file, then build/start the games platform.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+
+install_ubuntu_packages() {
+  if ! command -v apt-get >/dev/null 2>&1; then
+    echo "==> apt-get not found; skipping OS package install"
+    return 0
+  fi
+
+  local sudo_cmd=()
+  if [[ "$(id -u)" -ne 0 ]]; then
+    sudo_cmd=(sudo)
+  fi
+
+  echo "==> Installing OS packages"
+  "${sudo_cmd[@]}" apt-get update
+  "${sudo_cmd[@]}" apt-get install -y \
+    build-essential \
+    make \
+    nodejs \
+    npm \
+    python3 \
+    python3-pip \
+    python3-venv
+}
+
+prepare_env() {
+  if [[ -f "${ROOT}/.env" ]]; then
+    return 0
+  fi
+
+  if [[ ! -f "${ROOT}/.env.example" ]]; then
+    echo "error: missing ${ROOT}/.env.example" >&2
+    exit 1
+  fi
+
+  cp "${ROOT}/.env.example" "${ROOT}/.env"
+  echo "==> Created .env from .env.example"
+  echo "==> Fill in .env with Supabase values and GAMES_AUTH_PEPPER before running in production"
+}
+
+install_ubuntu_packages
+prepare_env
+exec "${ROOT}/build" "$@"

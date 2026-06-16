@@ -1,0 +1,12 @@
+{$DOMAIN} {
+	@internal_ready path /api/ready
+	respond @internal_ready 404
+
+	encode zstd gzip
+
+	reverse_proxy games:8080 {
+		flush_interval -1
+	}
+
+	header -Server
+}

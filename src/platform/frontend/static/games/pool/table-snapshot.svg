@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="table-svg" width="1514" height="839" viewBox="-164 -164 1678 3028" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+<style>
+  #table-svg { user-select: none; -webkit-user-select: none; overflow: hidden; }
+  #table-svg text { user-select: none; pointer-events: none; }
+  #table-svg .pool-ball { user-select: none; }
+  #table-svg .pool-ball > * { pointer-events: none; }
+  #table-svg .pool-ball-cue .pool-ball-hit { pointer-events: auto; cursor: grab; }
+  #table-svg .pool-ball-cue:active .pool-ball-hit { cursor: grabbing; }
+</style>
+<defs>
+  <clipPath id="felt-clip"><path d="M 88 22 L 1262 22 A 66 66 0 0 1 1328 88 L 1328 1281 A 69 69 0 0 1 1328 1419 L 1328 2678 A 66 66 0 0 1 1262 2744 L 88 2678 A 66 66 0 0 1 22 2678 L 22 1419 A 69 69 0 0 0 22 1281 L 22 88 A 66 66 0 0 1 88 22 Z"/></clipPath>
+  <pattern id="wood-grain" width="48" height="48" patternUnits="userSpaceOnUse">
+    <rect width="48" height="48" fill="#4a2a12"/>
+    <path d="M0 10 Q24 6 48 14" fill="none" stroke="#7a4e28" stroke-width="2.2" opacity="0.35"/>
+    <path d="M0 28 Q24 32 48 24" fill="none" stroke="#6b3f20" stroke-width="1.6" opacity="0.28"/>
+    <path d="M0 40 L48 38" fill="none" stroke="#3d2210" stroke-width="1.2" opacity="0.4"/>
+  </pattern>
+  <radialGradient id="felt-grad" cx="50%" cy="38%" r="72%">
+    <stop offset="0%" stop-color="#3aa866"/>
+    <stop offset="55%" stop-color="#248f4a"/>
+    <stop offset="100%" stop-color="#145c2e"/>
+  </radialGradient>
+  <linearGradient id="rail-wood-h" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#c47832"/>
+    <stop offset="40%" stop-color="#7a4520"/>
+    <stop offset="100%" stop-color="#3a1f0c"/>
+  </linearGradient>
+  <linearGradient id="rail-wood-v" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#c47832"/>
+    <stop offset="40%" stop-color="#7a4520"/>
+    <stop offset="100%" stop-color="#3a1f0c"/>
+  </linearGradient>
+  <linearGradient id="cushion-face-h" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#5ecf8e"/>
+    <stop offset="100%" stop-color="#1a5c34"/>
+  </linearGradient>
+  <linearGradient id="cushion-face-v" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#5ecf8e"/>
+    <stop offset="100%" stop-color="#1a5c34"/>
+  </linearGradient>
+  <linearGradient id="pocket-cap-grad" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffe566"/>
+    <stop offset="45%" stop-color="#f0c020"/>
+    <stop offset="100%" stop-color="#c8860a"/>
+  </linearGradient>
+  <linearGradient id="side-pocket-grad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#9a5c30"/>
+    <stop offset="55%" stop-color="#6d3f1c"/>
+    <stop offset="100%" stop-color="#4a2810"/>
+  </linearGradient>
+  <radialGradient id="pocket-hole" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" stop-color="#050505"/>
+    <stop offset="65%" stop-color="#121212"/>
+    <stop offset="100%" stop-color="#2a2a2a"/>
+  </radialGradient>
+  <radialGradient id="ball-sphere-white" cx="32%" cy="28%" r="68%">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="35%" stop-color="#f0f0f0"/>
+    <stop offset="72%" stop-color="#d8d8d8"/>
+    <stop offset="100%" stop-color="#9a9a9a"/>
+  </radialGradient>
+  <radialGradient id="ball-sphere-cue" cx="32%" cy="28%" r="68%">
+    <stop offset="0%" stop-color="#ffffff"/>
+    <stop offset="40%" stop-color="#f5f5f5"/>
+    <stop offset="100%" stop-color="#b0b0b0"/>
+  </radialGradient>
+  <radialGradient id="ball-shine" cx="32%" cy="26%" r="62%">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+    <stop offset="45%" stop-color="#ffffff" stop-opacity="0.12"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.38"/>
+  </radialGradient>
+</defs>
+<g id="table-rotor" transform="translate(0,2700) rotate(-90)"><g class="pool-rails" pointer-events="none"><rect x="-88" y="-88" width="1526" height="66" fill="url(#rail-wood-h)"/><rect x="-88" y="-88" width="1526" height="66" fill="url(#wood-grain)" opacity="0.55"/><rect x="-88" y="2722" width="1526" height="66" fill="url(#rail-wood-h)"/><rect x="-88" y="2722" width="1526" height="66" fill="url(#wood-grain)" opacity="0.55"/><rect x="-88" y="-88" width="66" height="2876" fill="url(#rail-wood-v)"/><rect x="-88" y="-88" width="66" height="2876" fill="url(#wood-grain)" opacity="0.55"/><rect x="1372" y="-88" width="66" height="2876" fill="url(#rail-wood-v)"/><rect x="1372" y="-88" width="66" height="2876" fill="url(#wood-grain)" opacity="0.55"/><rect x="44" y="0" width="1262" height="22" fill="url(#cushion-face-h)"/><rect x="44" y="2678" width="1262" height="22" fill="url(#cushion-face-h)"/><rect x="0" y="44" width="22" height="1236" fill="url(#cushion-face-v)"/><rect x="0" y="1418" width="22" height="1260" fill="url(#cushion-face-v)"/><rect x="1328" y="44" width="22" height="1236" fill="url(#cushion-face-v)"/><rect x="1328" y="1418" width="22" height="1260" fill="url(#cushion-face-v)"/><rect x="-86" y="-86" width="1522" height="2938" fill="none" stroke="#2a1408" stroke-width="5"/></g>
+<g class="pool-playfield" clip-path="url(#felt-clip)"><path d="M 88 22 L 1262 22 A 66 66 0 0 1 1328 88 L 1328 1281 A 69 69 0 0 1 1328 1419 L 1328 2678 A 66 66 0 0 1 1262 2744 L 88 2678 A 66 66 0 0 1 22 2678 L 22 1419 A 69 69 0 0 0 22 1281 L 22 88 A 66 66 0 0 1 88 22 Z" fill="url(#felt-grad)"/></g><g class="pool-pocket-trim" pointer-events="none"><rect x="-156" y="-156" width="180" height="94" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="-156" y="-156" width="94" height="180" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="-152" y="-152" width="172" height="86" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="-152" y="-152" width="86" height="172" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="-88" y="1275" width="88" height="150" rx="14" fill="url(#side-pocket-grad)" stroke="#3d2210" stroke-width="2.5"/><rect x="-84" y="1280" width="80" height="140" rx="11" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2"/><rect x="-156" y="2520" width="180" height="94" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="-156" y="2606" width="94" height="180" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="-152" y="2524" width="172" height="86" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="-152" y="2610" width="86" height="172" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="1256" y="-156" width="94" height="180" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="1170" y="-156" width="180" height="94" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="1260" y="-152" width="86" height="172" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="1176" y="-152" width="172" height="86" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="1350" y="1275" width="88" height="150" rx="14" fill="url(#side-pocket-grad)" stroke="#3d2210" stroke-width="2.5"/><rect x="1354" y="1280" width="80" height="140" rx="11" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2"/><rect x="1256" y="2520" width="94" height="180" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="1170" y="2606" width="180" height="94" rx="14" fill="url(#pocket-cap-grad)" stroke="#8a6206" stroke-width="2.8"/><rect x="1260" y="2524" width="86" height="172" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/><rect x="1176" y="2610" width="172" height="86" rx="10" fill="none" stroke="#fff4b0" stroke-width="1.4" opacity="0.55"/></g>
+<g class="pool-pockets" pointer-events="none"> <g class="pool-pocket" pointer-events="none"><circle cx="0" cy="0" r="64" fill="#000"/><circle cx="0" cy="0" r="59" fill="url(#pocket-hole)"/><circle cx="0" cy="0" r="55" fill="none" stroke="#2a2a2a" stroke-width="5"/><circle cx="0" cy="0" r="60" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+ <g class="pool-pocket" pointer-events="none"><circle cx="0" cy="1350" r="70" fill="#000"/><circle cx="0" cy="1350" r="64" fill="url(#pocket-hole)"/><circle cx="0" cy="1350" r="60" fill="none" stroke="#2a2a2a" stroke-width="6"/><circle cx="0" cy="1350" r="66" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+ <g class="pool-pocket" pointer-events="none"><circle cx="0" cy="2700" r="64" fill="#000"/><circle cx="0" cy="2700" r="59" fill="url(#pocket-hole)"/><circle cx="0" cy="2700" r="55" fill="none" stroke="#2a2a2a" stroke-width="5"/><circle cx="0" cy="2700" r="60" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+ <g class="pool-pocket" pointer-events="none"><circle cx="1350" cy="0" r="64" fill="#000"/><circle cx="1350" cy="0" r="59" fill="url(#pocket-hole)"/><circle cx="1350" cy="0" r="55" fill="none" stroke="#2a2a2a" stroke-width="5"/><circle cx="1350" cy="0" r="60" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+ <g class="pool-pocket" pointer-events="none"><circle cx="1350" cy="1350" r="70" fill="#000"/><circle cx="1350" cy="1350" r="64" fill="url(#pocket-hole)"/><circle cx="1350" cy="1350" r="60" fill="none" stroke="#2a2a2a" stroke-width="6"/><circle cx="1350" cy="1350" r="66" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+ <g class="pool-pocket" pointer-events="none"><circle cx="1350" cy="2700" r="64" fill="#000"/><circle cx="1350" cy="2700" r="59" fill="url(#pocket-hole)"/><circle cx="1350" cy="2700" r="55" fill="none" stroke="#2a2a2a" stroke-width="5"/><circle cx="1350" cy="2700" r="60" fill="none" stroke="#4a4a4a" stroke-width="1.2" opacity="0.45"/></g>
+</g>
+</g>
+</svg>

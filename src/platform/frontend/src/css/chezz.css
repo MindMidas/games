@@ -1,0 +1,159 @@
+/* Tailwind source for the Chezz shell. Theme tokens live in static/games/chezz/css/theme.css. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lobby: JS may add `.hidden` alongside layout classes - keep panel collapsed. */
+.lobby-active-game-panel.hidden {
+  display: none !important;
+}
+
+@layer base {
+  html {
+    @apply h-full antialiased;
+  }
+  body {
+    @apply min-h-full font-sans antialiased;
+    color: var(--shell-fg);
+    background:
+      radial-gradient(circle at 14% 20%, var(--page-bg-glow-a), transparent 42%),
+      radial-gradient(circle at 86% 10%, var(--page-bg-glow-b), transparent 38%),
+      radial-gradient(circle at 70% 92%, var(--page-bg-glow-c), transparent 45%),
+      var(--page-bg-linear);
+  }
+}
+
+@layer components {
+  /* Shell UI: game-btn-*, game-panel, game-tab, etc. (platform CSS). */
+
+  /* Thin emerald scrollbars (Firefox + WebKit) for lists and side panel */
+  .chezz-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 211, 153, 0.45) rgba(9, 9, 11, 0.55);
+  }
+  .chezz-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .chezz-scrollbar::-webkit-scrollbar-track {
+    margin: 4px 0;
+    background: var(--shell-bg);
+    border-radius: 999px;
+  }
+  .chezz-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 2px solid rgba(9, 9, 11, 0.55);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-secondary) 45%, transparent),
+      color-mix(in srgb, var(--color-primary) 35%, transparent)
+    );
+  }
+  .chezz-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-secondary) 55%, transparent),
+      color-mix(in srgb, var(--color-accent) 48%, transparent)
+    );
+  }
+
+  /* Lobby leaderboard (platform game-stat / game-panel-muted). */
+  .leaderboard-list {
+    @apply flex max-h-[min(52vh,30rem)] flex-col gap-1.5 overflow-y-auto overflow-x-hidden;
+  }
+  .leaderboard-empty {
+    @apply rounded-lg border border-dashed border-emerald-800/40 bg-zinc-950/40 py-8 text-center text-xs text-emerald-600/80;
+  }
+  .leaderboard-row {
+    @apply grid grid-cols-[1.75rem_2rem_minmax(0,1fr)_auto] items-center gap-2 rounded-lg border border-emerald-900/35
+      bg-zinc-950/50 px-2 py-1.5 text-xs text-emerald-100/90 transition-colors;
+  }
+  .leaderboard-row.rank-1 {
+    @apply border-emerald-500/40 bg-emerald-950/20 ring-1 ring-emerald-500/20;
+  }
+  .leaderboard-row.rank-2 {
+    @apply border-sky-500/35 bg-sky-950/20 ring-1 ring-sky-500/20;
+  }
+  .leaderboard-row.rank-3 {
+    @apply border-amber-700/40 bg-amber-950/15 ring-1 ring-amber-600/20;
+  }
+  .leaderboard-row.is-you {
+    @apply border-sky-400/35 bg-sky-950/25 ring-1 ring-sky-400/25;
+  }
+  .leaderboard-row.rank-3.is-you {
+    @apply border-amber-700/40 bg-amber-950/15 ring-1 ring-amber-600/20;
+  }
+  .leaderboard-rank.leaderboard-medal {
+    @apply inline-flex items-center justify-center leading-none;
+  }
+  .leaderboard-rank.leaderboard-medal svg {
+    @apply h-5 w-5;
+  }
+  .leaderboard-rank {
+    @apply text-center font-mono text-[11px] font-bold tabular-nums text-emerald-500/75;
+  }
+  .leaderboard-row.rank-1 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-emerald-300/90;
+  }
+  .leaderboard-row.rank-2 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-sky-300/90;
+  }
+  .leaderboard-row.rank-3 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-amber-200/90;
+  }
+  .leaderboard-avatar {
+    @apply h-full w-full rounded-full object-cover;
+  }
+  .leaderboard-name {
+    @apply min-w-0 truncate font-medium text-emerald-50/95;
+  }
+  .leaderboard-row.is-you:not(.rank-3) .leaderboard-name {
+    @apply text-sky-100/95;
+  }
+  .leaderboard-row.rank-3.is-you .leaderboard-name {
+    @apply text-amber-100/95;
+  }
+  .leaderboard-stats {
+    @apply font-mono text-[11px] tabular-nums text-emerald-400/75;
+  }
+
+  .password-toggle-slash {
+    @apply opacity-0 transition-opacity duration-150 ease-in-out;
+  }
+  .password-toggle-btn.is-hidden .password-toggle-slash {
+    @apply opacity-100;
+  }
+  .password-toggle-btn.is-visible .password-toggle-slash {
+    @apply opacity-0;
+  }
+
+  /* Board: captured material under each player (fixed-height strip, Tailwind surface). */
+  /* Same green surface as .chezz-btn-primary (solid stops, no alpha on fill/border). */
+  .chezz-captured-strip {
+    @apply flex w-full max-w-full items-center gap-[0.14rem] self-center rounded-md px-1.5 py-0;
+    border: 1px solid var(--color-primary);
+    background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    /* One row x 16 pieces: width from .board-player-card --chezz-captured-strip-min (fallback if used outside board card). */
+    min-width: var(
+      --chezz-captured-strip-min,
+      calc(16 * min(20px, calc(15px * var(--game-scale-avatar, 1))) + 15 * 0.14rem + 0.75rem + 2px)
+    );
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    min-height: calc(1.55rem * var(--game-scale-avatar, 1));
+    height: calc(1.55rem * var(--game-scale-avatar, 1));
+    max-height: calc(1.55rem * var(--game-scale-avatar, 1));
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-secondary) 45%, white);
+  }
+
+  .chezz-captured-strip .captured-piece-img {
+    width: calc(15px * var(--game-scale-avatar, 1));
+    height: calc(15px * var(--game-scale-avatar, 1));
+    max-width: 20px;
+    max-height: 20px;
+    flex: 0 0 auto;
+    object-fit: contain;
+    filter: drop-shadow(0 1px 0 rgb(6 78 59)) drop-shadow(0 1px 1px rgb(6 78 59));
+  }
+}

@@ -1,0 +1,130 @@
+/* Tailwind source for the Pool shell. Theme tokens live in static/games/pool/css/theme.css. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lobby: JS may add `.hidden` alongside layout classes - keep panel collapsed. */
+.lobby-active-game-panel.hidden {
+  display: none !important;
+}
+
+@layer base {
+  html {
+    @apply h-full antialiased;
+  }
+  body {
+    @apply min-h-full font-sans antialiased;
+    color: var(--shell-fg);
+    background:
+      radial-gradient(circle at 14% 20%, var(--page-bg-glow-a), transparent 42%),
+      radial-gradient(circle at 86% 10%, var(--page-bg-glow-b), transparent 38%),
+      radial-gradient(circle at 70% 92%, var(--page-bg-glow-c), transparent 45%),
+      var(--page-bg-linear);
+  }
+}
+
+@layer components {
+  /* Shell UI: game-btn-*, game-panel, game-tab, etc. (platform CSS). */
+
+  /* Scrollbars: neutral track, Pool brand on thumb only */
+  .pool-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--color-secondary) 45%, transparent) var(--shell-bg);
+  }
+  .pool-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .pool-scrollbar::-webkit-scrollbar-track {
+    margin: 4px 0;
+    background: var(--shell-bg);
+    border-radius: 999px;
+  }
+  .pool-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    border: 2px solid rgba(9, 9, 11, 0.55);
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-secondary) 45%, transparent),
+      color-mix(in srgb, var(--color-primary) 35%, transparent)
+    );
+  }
+  .pool-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-secondary) 55%, transparent),
+      color-mix(in srgb, var(--color-accent) 48%, transparent)
+    );
+  }
+
+  /* Lobby leaderboard (platform game-stat / game-panel-muted). */
+  .leaderboard-list {
+    @apply flex max-h-[min(52vh,30rem)] flex-col gap-1.5 overflow-y-auto overflow-x-hidden;
+  }
+  .leaderboard-empty {
+    @apply rounded-lg border border-dashed border-zinc-600/50 bg-zinc-950/40 py-8 text-center text-xs text-zinc-400/90;
+  }
+  .leaderboard-row {
+    @apply grid grid-cols-[1.75rem_2rem_minmax(0,1fr)_auto] items-center gap-2 rounded-lg border border-zinc-700/45
+      bg-zinc-950/50 px-2 py-1.5 text-xs text-zinc-100/90 transition-colors;
+  }
+  .leaderboard-row.rank-1 {
+    @apply border-sky-500/40 bg-sky-950/20 ring-1 ring-sky-500/20;
+  }
+  .leaderboard-row.rank-2 {
+    @apply border-cyan-500/35 bg-cyan-950/20 ring-1 ring-cyan-500/20;
+  }
+  .leaderboard-row.rank-3 {
+    @apply border-amber-700/40 bg-amber-950/15 ring-1 ring-amber-600/20;
+  }
+  .leaderboard-row.is-you {
+    @apply border-zinc-500/45 bg-zinc-900/55 ring-1 ring-zinc-500/25;
+  }
+  .leaderboard-row.rank-3.is-you {
+    @apply border-amber-700/40 bg-amber-950/15 ring-1 ring-amber-600/20;
+  }
+  .leaderboard-rank.leaderboard-medal {
+    @apply inline-flex items-center justify-center leading-none;
+  }
+  .leaderboard-rank.leaderboard-medal svg {
+    @apply h-5 w-5;
+  }
+  .leaderboard-rank {
+    @apply text-center font-mono text-[11px] font-bold tabular-nums text-zinc-500/80;
+  }
+  .leaderboard-row.rank-1 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-sky-300/90;
+  }
+  .leaderboard-row.rank-2 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-cyan-300/90;
+  }
+  .leaderboard-row.rank-3 .leaderboard-rank:not(.leaderboard-medal) {
+    @apply text-amber-200/90;
+  }
+  .leaderboard-avatar {
+    @apply h-full w-full rounded-full object-cover;
+  }
+  .leaderboard-name {
+    @apply min-w-0 truncate font-medium text-zinc-50/95;
+  }
+  .leaderboard-row.is-you:not(.rank-3) .leaderboard-name {
+    @apply text-zinc-100/95;
+  }
+  .leaderboard-row.rank-3.is-you .leaderboard-name {
+    @apply text-amber-100/95;
+  }
+  .leaderboard-stats {
+    @apply font-mono text-[11px] tabular-nums text-zinc-400/80;
+  }
+
+  .password-toggle-slash {
+    @apply opacity-0 transition-opacity duration-150 ease-in-out;
+  }
+  .password-toggle-btn.is-hidden .password-toggle-slash {
+    @apply opacity-100;
+  }
+  .password-toggle-btn.is-visible .password-toggle-slash {
+    @apply opacity-0;
+  }
+
+}

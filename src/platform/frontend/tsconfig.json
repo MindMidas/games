@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "rootDir": "src/client",
+    "outDir": "static/games",
+    "strict": true,
+    "noImplicitAny": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "noCheck": false,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/client/**/*.ts"]
+}

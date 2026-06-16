@@ -1,0 +1,169 @@
+/*
+ * Shared shell components (buttons, panels, inputs, modals, stats).
+ * Structure is identical for Chezz and Pool; colors come from theme.css only.
+ */
+
+/* Buttons */
+
+.game-btn-sm {
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  padding: 0.375rem 0.625rem;
+}
+
+.game-btn-md {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  padding: 0.5rem 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .sm\:game-btn-md {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.game-btn-primary,
+.game-btn-outline,
+.game-btn-ghost,
+.game-btn-danger-outline,
+.game-btn-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition:
+    color 0.15s ease,
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease;
+}
+
+.game-btn-primary:focus-visible,
+.game-btn-outline:focus-visible,
+.game-btn-ghost:focus-visible,
+.game-btn-danger-outline:focus-visible,
+.game-btn-circle:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 65%, transparent);
+  outline-offset: 2px;
+}
+
+.game-btn-primary:disabled,
+.game-btn-outline:disabled,
+.game-btn-ghost:disabled,
+.game-btn-danger-outline:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.game-btn-primary {
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  background: linear-gradient(
+    180deg,
+    var(--color-secondary) 0%,
+    var(--color-primary) 100%
+  );
+  color: var(--color-primary-fg);
+  box-shadow: var(--shadow-sm);
+}
+
+.game-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-secondary) 88%, #fff) 0%,
+    var(--color-primary-hover) 100%
+  );
+  box-shadow: var(--shadow-md);
+}
+
+.game-btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.game-btn-outline {
+  border: 1px solid var(--shell-border-strong);
+  background: var(--shell-bg-elev2);
+  color: var(--shell-fg);
+}
+
+.game-btn-outline:hover:not(:disabled) {
+  background: var(--shell-bg-elev1);
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--shell-border-strong));
+}
+
+.game-btn-ghost {
+  border: 1px solid transparent;
+  background: transparent;
+  color: color-mix(in srgb, var(--color-fg) 88%, transparent);
+}
+
+.game-btn-ghost:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-bg-elev2) 65%, transparent);
+}
+
+.game-btn-danger-outline {
+  border: 1px solid color-mix(in srgb, var(--color-error) 48%, transparent);
+  background: color-mix(in srgb, var(--color-error) 12%, var(--color-bg));
+  color: color-mix(in srgb, #fff 85%, var(--color-error));
+}
+
+.game-btn-danger-outline:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-error) 22%, var(--color-bg));
+}
+
+.game-btn-circle {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev2);
+  color: var(--shell-fg);
+}
+
+/* Inputs (neutral surface; accent on focus in game-shell-chrome.css) */
+
+.game-input {
+  width: 100%;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: var(--font-display);
+}
+
+.game-input-xs {
+  padding: 0.375rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+/* Panels, modals, stats: game-shell-chrome.css */
+
+.game-modal-heading {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.game-modal-heading--md {
+  font-size: clamp(1rem, 2.5vw, 1.15rem);
+}
+
+.game-modal-heading--lg {
+  font-size: clamp(1.1rem, 3vw, 1.45rem);
+}
+
+.game-modal-divider {
+  width: min(12rem, 70%);
+  height: 1px;
+  margin: 0.35rem auto 0;
+}
+
+/* Stats, alerts, shell labels: game-shell-chrome.css */

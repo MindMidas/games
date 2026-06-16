@@ -1,0 +1,866 @@
+/*
+ * Neutral "constructor" chrome for shared UI (panels, modals, lobby, in-game drawer).
+ * Game brand color (--color-accent) is for buttons, active tabs, and subtle accents only.
+ */
+
+/* Panels & surfaces */
+
+.game-panel {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev1);
+  box-shadow: var(--shadow-md);
+  color: var(--shell-fg);
+}
+
+.game-panel-muted {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev2);
+  color: var(--shell-fg);
+}
+
+.game-inset-section {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev2);
+}
+
+.game-inset-muted {
+  border-radius: var(--radius-md);
+  border: 1px dashed var(--shell-border);
+  background: var(--shell-bg);
+}
+
+.game-stat {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev2);
+}
+
+.game-stat-label {
+  color: var(--shell-fg-muted);
+}
+
+.game-stat-value {
+  color: var(--shell-fg);
+}
+
+.game-alert {
+  border: 1px solid var(--shell-border-strong);
+  background: var(--shell-bg-elev2);
+  color: var(--shell-fg);
+}
+
+.game-alert svg {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Lobby: unfinished-game banner (shared Chezz / Pool) */
+.lobby-active-game-panel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 0.75rem 1rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 32%, var(--shell-border));
+  background: color-mix(in srgb, var(--shell-bg-elev2) 88%, var(--shell-bg));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--shell-fg) 4%, transparent);
+}
+
+.lobby-active-game-panel.hidden {
+  display: none !important;
+}
+
+.lobby-active-game-panel__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  margin-top: 0.05rem;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-accent) 16%, transparent);
+  color: var(--color-accent);
+}
+
+.lobby-active-game-panel__icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.lobby-active-game-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+#lobby-active-game-message {
+  margin: 0;
+}
+
+.lobby-active-game-panel__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: stretch;
+}
+
+@media (min-width: 520px) {
+  .lobby-active-game-panel__actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+/* Column layout: flex-basis in rem was sizing *height* (~8.5rem tall buttons). */
+.lobby-active-game-panel__actions .game-btn-sm {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 100%;
+  justify-content: center;
+  min-height: 2.125rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  white-space: normal;
+  text-align: center;
+}
+
+@media (min-width: 520px) {
+  .lobby-active-game-panel__actions .game-btn-sm {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: min(100%, 7.5rem);
+    max-width: 100%;
+  }
+}
+
+.game-account-chip {
+  border: 1px solid var(--shell-border);
+  background: var(--shell-bg-elev2);
+}
+
+.game-field-label,
+.game-section-label {
+  color: var(--shell-fg-muted);
+}
+
+.game-modal-heading {
+  color: var(--shell-fg);
+}
+
+.game-shell-title {
+  color: var(--shell-fg);
+}
+
+.game-shell-subtitle,
+.game-muted-text {
+  color: var(--shell-fg-muted);
+}
+
+.game-modal-divider {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--color-accent) 42%, var(--shell-border)),
+    transparent
+  );
+}
+
+/* In-game drawer & arena frames */
+
+#game-app .arena-frame.game-panel,
+#game-app .side-panel.right-panel.game-panel,
+#game-app .side-panel .game-panel-muted {
+  border-color: var(--shell-border);
+  background: var(--shell-bg-elev1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+#game-app .side-panel .game-panel-muted {
+  background: var(--shell-bg-elev2);
+}
+
+.game-tab-row {
+  background: var(--shell-bg);
+  border-color: var(--shell-border);
+}
+
+.game-tab {
+  color: var(--shell-fg-muted);
+}
+
+.game-pill {
+  border-color: var(--shell-border);
+  background: var(--shell-bg-elev2);
+  color: var(--shell-fg);
+}
+
+.game-input {
+  border-color: var(--shell-border);
+  background: var(--shell-bg);
+  color: var(--shell-fg);
+}
+
+.game-input::placeholder {
+  color: color-mix(in srgb, var(--shell-fg-muted) 70%, transparent);
+}
+
+.game-input:focus {
+  border-color: color-mix(in srgb, var(--color-accent) 50%, var(--shell-border));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-accent) 14%, transparent);
+}
+
+/* Matchmaking cards (both games) */
+
+.game-mm-card {
+  border: 1px solid var(--shell-border) !important;
+  background: var(--shell-bg-elev2) !important;
+  --tw-ring-color: transparent !important;
+}
+
+.game-mm-card.is-searching {
+  border-color: color-mix(in srgb, var(--color-accent) 38%, var(--shell-border)) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent) !important;
+}
+
+.game-mm-name {
+  color: var(--shell-fg) !important;
+}
+
+.game-mm-role {
+  color: var(--shell-fg-muted) !important;
+}
+
+.game-mm-vs {
+  color: var(--shell-fg-muted) !important;
+}
+
+.game-mm-dot {
+  background: var(--color-accent) !important;
+  box-shadow: none !important;
+}
+
+/* Popups: loading, VS/setup, matchmaking, invite, confirm */
+
+.app-loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Flex centering so popup width resolves (grid + % min-width shrink-wraps the card) */
+.game-setup-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  opacity: 1;
+  visibility: visible;
+}
+
+.game-setup-screen {
+  z-index: 110;
+}
+
+.app-loading-screen.fade-out,
+.game-setup-screen.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* Shared modal cards (loading, VS/setup, matchmaking, invite, game-over) */
+.game-modal-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 36rem);
+  max-height: min(88dvh, 28rem);
+  margin: 0 auto;
+  padding: clamp(1rem, 2.8vw, 1.35rem) clamp(1.1rem, 4vw, 1.5rem);
+  gap: 0.75rem;
+  text-align: center;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+/* Standard popup width - loading, VS/setup, matchmaking, invite, match result, confirm */
+.game-modal-card--popup,
+.game-modal-card--compact,
+.game-modal-card--setup,
+.game-modal-card--result {
+  width: min(32rem, calc(100vw - 2rem));
+  max-width: min(32rem, calc(100vw - 2rem));
+  max-height: min(92dvh, 36rem);
+  margin-inline: auto;
+  gap: 0.85rem;
+  padding: clamp(1rem, 2.8vw, 1.4rem) clamp(1.1rem, 4vw, 1.45rem);
+}
+
+/* Popups: explicit width (avoid % inside shrink-wrapped grid/flex items) */
+.app-loading-screen > .app-loading-inner.game-modal-card--popup,
+.game-setup-screen > .game-setup-inner.game-modal-card--popup,
+#matchmaking-screen > .game-setup-inner.game-modal-card--popup {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: min(32rem, calc(100vw - 2rem));
+  max-width: min(32rem, calc(100vw - 2rem));
+}
+
+#matchmaking-screen .game-setup-inner,
+#matchmaking-screen > .game-panel,
+#lobby-invite-modal .game-panel,
+#app-confirm-overlay .app-confirm-panel,
+#game-over-overlay .game-over-panel {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+#game-over-overlay .game-over-inner,
+#game-over-overlay .game-over-panel,
+#app-confirm-overlay .app-confirm-panel {
+  background: var(--shell-bg-elev1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.app-loading-inner,
+.game-setup-inner {
+  max-height: min(92dvh, 40rem);
+}
+
+.game-setup-header,
+.game-setup-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0.55rem;
+}
+
+.game-setup-footer {
+  gap: 0.65rem;
+  padding-top: 0.15rem;
+}
+
+.app-loading-logo {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-loading-piece {
+  width: clamp(44px, 12vw, 56px);
+  height: clamp(44px, 12vw, 56px);
+  object-fit: contain;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.45));
+}
+
+.app-loading-piece-1 {
+  animation: game-loading-float 2.4s ease-in-out infinite;
+}
+
+.app-loading-piece-2 {
+  animation: game-loading-float 2.4s ease-in-out 0.35s infinite;
+}
+
+@keyframes game-loading-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.app-loading-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(1.15rem, 4.5vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--shell-fg);
+  text-shadow: none;
+}
+
+.app-loading-spinner {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-loading-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.35;
+  animation: game-loading-pulse 1.15s ease-in-out infinite;
+}
+
+.app-loading-dot:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.app-loading-dot:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+@keyframes game-loading-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.88);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.app-loading-text {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--shell-fg-muted);
+}
+
+.game-setup-match {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.65rem, 3vw, 1rem);
+  width: 100%;
+}
+
+.game-setup-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.45rem;
+  min-width: 0;
+  text-align: center;
+}
+
+.game-setup-sep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.15rem;
+}
+
+.game-setup-name {
+  display: block;
+  width: 100%;
+  max-width: 9.5rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--shell-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-setup-role {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--shell-fg-muted);
+}
+
+.game-setup-vs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  padding: 0.32rem 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--shell-fg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--shell-border-strong);
+  background: var(--shell-bg);
+}
+
+#game-setup-title {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-setup-status {
+  margin: 0;
+  width: 100%;
+  max-width: 20rem;
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: var(--shell-fg-muted);
+  text-align: center;
+}
+
+.game-setup-status.is-error {
+  color: color-mix(in srgb, #f87171 85%, var(--shell-fg-muted));
+}
+
+#matchmaking-screen.game-setup-screen:not(.hidden) {
+  z-index: 110;
+}
+
+/* Matchmaking - same card layout as game-over (wide modal, one search indicator) */
+#matchmaking-screen > .game-setup-inner {
+  gap: 0.75rem;
+}
+
+#matchmaking-screen .game-setup-header {
+  gap: 0.45rem;
+}
+
+#matchmaking-screen #matchmaking-status {
+  max-width: 28rem;
+}
+
+#matchmaking-screen .game-mm-matchup {
+  width: 100%;
+  margin-top: 0.05rem;
+  gap: clamp(0.45rem, 2vw, 0.7rem);
+}
+
+#matchmaking-screen .game-mm-footer {
+  width: 100%;
+  gap: 0;
+  padding-top: 0.2rem;
+}
+
+#matchmaking-screen .game-mm-dots--search {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 1.15rem;
+}
+
+#matchmaking-screen .game-setup-player.is-searching .game-mm-dots--search {
+  display: inline-flex;
+}
+
+#matchmaking-screen .game-setup-player.is-searching #matchmaking-opponent-name:empty {
+  display: none;
+}
+
+#matchmaking-screen .game-setup-player:not(.is-searching) .game-mm-dots--search {
+  display: none !important;
+}
+
+.game-modal-surface {
+  animation: game-modal-enter 0.45s ease-out both;
+}
+
+@keyframes game-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#app-confirm-overlay.app-confirm-scrim,
+#game-app > #game-over-overlay.game-over-scrim {
+  background:
+    radial-gradient(ellipse 100% 70% at 50% 20%, rgba(0, 0, 0, 0.35), transparent 55%),
+    color-mix(in srgb, var(--shell-bg) 55%, transparent);
+}
+
+@media (max-width: 420px) {
+  .game-setup-match {
+    gap: 0.45rem;
+  }
+
+  .game-profile-avatar-wrap--xl,
+  .game-profile-avatar-wrap--xl {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .game-setup-vs {
+    min-width: 2.1rem;
+    font-size: 0.58rem;
+    padding: 0.28rem 0.4rem;
+  }
+}
+
+/* Game-over - mirrors VS/setup (game-setup-match + shell tokens) */
+
+#game-over-overlay .game-over-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(32rem, calc(100vw - 2rem));
+  max-width: min(32rem, calc(100vw - 2rem));
+  gap: 0.85rem;
+  padding: clamp(1.1rem, 3.2vw, 1.45rem) clamp(1rem, 4vw, 1.35rem);
+  padding-top: clamp(2.35rem, 6vw, 2.75rem);
+  text-align: center;
+}
+
+#game-over-overlay .game-over-header {
+  gap: 0.45rem;
+}
+
+#game-over-overlay #game-over-title {
+  font-size: clamp(1.05rem, 4vw, 1.35rem);
+}
+
+#game-over-overlay #game-over-subtitle {
+  max-width: 28rem;
+}
+
+#game-over-overlay .game-over-matchup {
+  margin-top: 0.1rem;
+}
+
+#game-over-overlay .game-over-matchup.game-setup-match {
+  gap: clamp(0.45rem, 2vw, 0.7rem);
+}
+
+#game-over-overlay .game-over-player .game-profile-avatar-wrap--xl {
+  position: relative;
+}
+
+#game-over-overlay .game-over-winner-badge {
+  position: absolute;
+  right: -0.2rem;
+  top: -0.2rem;
+  z-index: 2;
+  display: none;
+  width: 1.55rem;
+  height: 1.55rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
+  background: var(--color-primary);
+  color: var(--color-primary-fg);
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+}
+
+#game-over-overlay .game-over-winner-badge svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: currentColor;
+}
+
+#game-over-overlay .game-over-player.is-winner .game-over-winner-badge {
+  display: inline-flex;
+}
+
+#game-over-overlay .game-over-player.is-winner .game-profile-avatar-wrap--xl {
+  box-shadow:
+    0 0 0 2px var(--shell-bg-elev1),
+    0 0 0 3px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+
+#game-over-overlay .game-over-player.is-winner .game-setup-name {
+  color: var(--shell-fg);
+}
+
+#game-over-overlay .game-over-footer {
+  width: 100%;
+  padding-top: 0.25rem;
+}
+
+#game-over-overlay .game-over-actions-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 20rem;
+  margin-inline: auto;
+}
+
+#game-over-overlay .game-over-actions-row .game-btn-outline,
+#game-over-overlay .game-over-actions-row .game-btn-primary {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 420px) {
+  #game-over-overlay .game-over-actions-row {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
+}
+
+#game-over-overlay .game-over-close {
+  z-index: 4;
+}
+
+.game-stat {
+  text-align: center;
+}
+
+.game-note {
+  color: var(--shell-fg-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-loading-piece-1,
+  .app-loading-piece-2,
+  .app-loading-dot,
+  .game-modal-surface {
+    animation: none !important;
+  }
+}
+
+/* Board profile rows & captured strip (Chezz brand green) */
+
+#game-app .board-player-card.game-panel-muted {
+  background: var(--shell-bg-elev2);
+  border-color: var(--shell-border);
+}
+
+.chezz-captured-strip {
+  border: 1px solid var(--color-primary);
+  background: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-secondary) 45%, white);
+}
+
+#game-app .side-name {
+  color: var(--shell-fg);
+}
+
+html[data-game="chezz"] .side-card.side-turn-active .game-profile-avatar-wrap::after {
+  border-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-top-color: var(--color-accent);
+}
+
+html[data-game="chezz"] .side-card.is-loading {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--shell-border));
+}
+
+html[data-game="chezz"] .side-card.is-loading .game-profile-avatar-wrap::after {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 38%, transparent);
+}
+
+html[data-game="pool"] .side-card.is-loading {
+  border-color: color-mix(in srgb, var(--color-accent) 35%, var(--shell-border));
+}
+
+html[data-game="pool"] .side-card.side-turn-active .game-profile-avatar-wrap::after {
+  border-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+  border-top-color: var(--color-accent);
+}
+
+/* Pool HUD / chips - neutral shell, accent labels only */
+.pool-board-chip-surface,
+.pool-shot-hud--drawer.pool-board-chip-surface,
+.board-player-tools .pool-shot-hud--strip {
+  border-color: var(--shell-border-strong);
+  background: var(--shell-bg-elev2);
+  box-shadow: var(--shadow-sm);
+}
+
+.pool-shot-hud-label {
+  color: var(--color-accent);
+}
+
+.pool-shot-hud-num {
+  color: var(--shell-fg);
+}
+
+.pool-shot-hud-sep {
+  color: var(--shell-fg-muted);
+}
+
+/* Chat bubbles - grey shell (game-app.css pool-blue overrides) */
+.chat-list {
+  border-color: var(--shell-border);
+  background: var(--shell-bg);
+}
+
+.chat-empty {
+  color: var(--shell-fg-muted);
+}
+
+.chat-message {
+  border-color: var(--shell-border);
+  background: var(--shell-bg-elev2);
+}
+
+.chat-message.mine {
+  border-color: color-mix(in srgb, var(--color-accent) 40%, var(--shell-border));
+  background: var(--shell-bg-elev1);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.chat-message.system,
+.chat-ended-banner {
+  border-color: var(--shell-border);
+  background: var(--shell-bg);
+}
+
+#game-app .status,
+.status {
+  color: var(--shell-fg-muted);
+  background: var(--shell-bg-elev2);
+  border-color: var(--shell-border);
+}
+
+/* Chezz lobby titles - emerald accent glow (not neon #30ff92) */
+html[data-game="chezz"] .app-loading-title,
+html[data-game="chezz"] .game-shell-title {
+  text-shadow: 0 0 20px color-mix(in srgb, var(--color-accent) 22%, transparent);
+}
+
+html[data-game="chezz"] .app-loading-piece {
+  filter: drop-shadow(0 4px 14px color-mix(in srgb, var(--color-accent) 18%, transparent));
+}

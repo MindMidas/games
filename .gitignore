@@ -1,0 +1,78 @@
+# Environment and secrets (never commit)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets/
+**/secrets/
+**/service-account*.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Node
+node_modules/
+**/node_modules/
+npm-debug.log*
+
+# IDE and OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Engine/build outputs — build on deploy with ./build build
+*.so
+*.dylib
+*.dll
+
+src/chezz/engine/**/*.o
+src/chezz/engine/main
+src/chezz/engine/run
+src/chezz/engine/**/board.out
+src/chezz/engine/**/board.txt
+src/chezz/engine/**/tt.dat
+src/chezz/engine/dll_exports.txt
+src/chezz/engine/user_actions.dll
+src/chezz/engine/libuser_actions.*
+
+src/pool/engine/**/*.o
+src/pool/engine/libphylib.so
+src/pool/engine/_phylib.so
+src/pool/engine/phylib.py
+src/pool/engine/phylib_wrap.c
+src/pool/engine/phylib.db
+src/pool/engine/*.svg
+
+# Frontend build outputs (npm run build in platform/frontend)
+src/platform/frontend/static/css/pool-tailwind.css
+src/platform/frontend/static/css/chezz-tailwind.css
+src/platform/frontend/static/games/**/*.js
+src/platform/frontend/static/games/**/*.js.map
+
+# Local/generated
+*.log
+.coverage
+htmlcov/
+
+# Local dev server logs + PID (./build)
+.dev-logs/

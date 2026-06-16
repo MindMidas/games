@@ -1,0 +1,311 @@
+<main id="game-app" class="app hidden">
+    <section class="board-panel">
+      <div id="game-drawer-scrim" class="game-drawer-scrim" hidden aria-hidden="true"></div>
+
+      <!-- Chezz arena -->
+      <div class="arena-frame game-panel flex min-h-0 flex-col gap-2 p-2 sm:gap-3 sm:p-3" data-game-only="chezz">
+        <div class="board-player-row board-player-row-top" aria-label="Opponent details">
+          <div class="board-top-meta">
+            <div class="side-card engine board-player-card game-panel-muted gap-2 px-3 py-2.5 sm:px-3.5">
+              <div class="game-profile-avatar-wrap game-profile-avatar-wrap--board">
+                <span class="game-profile-avatar-clip"><img id="engine-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Engine player"></span>
+              </div>
+              <div class="side-copy">
+                <div class="side-line">
+                  <span id="engine-name" class="side-name">Maximus</span>
+                  <span id="engine-role" class="side-role side-role-inline">Engine • Black</span>
+                </div>
+                <div id="black-captured" class="chezz-captured-strip"></div>
+              </div>
+              <div id="clock-profile-top-wrap" class="board-player-clock-wrap hidden" aria-label="Time left">
+                <kbd id="clock-profile-top" class="board-player-clock"></kbd>
+                <span id="clock-profile-top-last" class="board-player-clock-last"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-middle">
+          <div id="board" class="board" aria-label="Chezz board"></div>
+          <div id="board-legend" class="board-legend"></div>
+        </div>
+        <div class="board-player-row board-player-row-bottom" aria-label="Player details">
+          <div class="side-card human board-player-card game-panel-muted gap-2 px-3 py-2.5 sm:px-3.5">
+            <div class="game-profile-avatar-wrap game-profile-avatar-wrap--board">
+              <span class="game-profile-avatar-clip"><img id="human-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Player avatar"></span>
+            </div>
+            <div class="side-copy">
+              <div class="side-line">
+                <span id="human-name" class="side-name">Player</span>
+                <span id="human-role" class="side-role side-role-inline">Player • White</span>
+              </div>
+              <div id="white-captured" class="chezz-captured-strip"></div>
+            </div>
+            <div id="clock-profile-bottom-wrap" class="board-player-clock-wrap hidden" aria-label="Time left">
+              <kbd id="clock-profile-bottom" class="board-player-clock"></kbd>
+              <span id="clock-profile-bottom-last" class="board-player-clock-last"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pool arena -->
+      <div class="arena-frame game-panel flex min-h-0 flex-col gap-2 p-2 sm:gap-3 sm:p-3" data-game-only="pool">
+        <div class="board-player-row board-player-row-top" aria-label="Opponent details">
+          <div class="board-top-meta">
+            <div class="side-card board-player-card game-panel-muted gap-2 px-3 py-2.5 sm:px-3.5" id="pool-p2-card">
+              <div class="game-profile-avatar-wrap game-profile-avatar-wrap--board">
+                <span class="game-profile-avatar-clip"><img id="pool-p2-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt=""></span>
+              </div>
+              <div class="side-body">
+                <div class="side-head">
+                  <div class="side-line">
+                    <span id="pool-p2-name" class="side-name">Player 2</span>
+                    <span id="pool-p2-playing" class="side-role side-role-inline pool-badge hidden" hidden></span>
+                  </div>
+                  <div class="pool-side-score-row">
+                    <span class="pool-side-score">Score <strong id="pool-p2-score">0</strong></span>
+                    <div class="pool-profile-vel pool-vel-chip" data-telemetry-seat="player2" aria-label="Velocity">
+                      <span class="pool-vel-chip__label">Vel</span>
+                      <span class="pool-vel-chip__values">
+                        <span class="pool-vel-chip__num" data-pool-hud="xvel">0.000</span>
+                        <span class="pool-vel-chip__sep" aria-hidden="true">/</span>
+                        <span class="pool-vel-chip__num" data-pool-hud="yvel">0.000</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="board-player-tools">
+                  <div class="pool-shot-hud pool-shot-hud--strip pool-board-chip-surface hidden" data-telemetry-seat="player2" aria-label="Player 2 shot data" hidden>
+                    <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Cue</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="cue-x">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="cue-y">0.00</span></span></div>
+                    <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Cur</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="cursor-x">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="cursor-y">0.00</span></span></div>
+                    <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Vel</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="xvel">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="yvel">0.00</span></span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="board-player-trailing">
+                <div id="pool-p2-cue-mode-slot" class="board-player-cue-mode-slot" aria-hidden="true"></div>
+                <div id="clock-profile-top-wrap" class="board-player-clock-wrap hidden" aria-label="Time left">
+                  <kbd id="clock-profile-top" class="board-player-clock"></kbd>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="board-middle">
+          <div class="pool-table-bbox" aria-hidden="true">
+            <div id="pool-svg-container" class="pool-svg-container">
+              <div id="pool-svg-content" class="pool-svg-content"></div>
+              <svg class="pool-svg-overlay" aria-hidden="true"></svg>
+            </div>
+          </div>
+        </div>
+        <div class="board-player-row board-player-row-bottom" aria-label="Player details">
+          <div class="side-card board-player-card game-panel-muted gap-2 px-3 py-2.5 sm:px-3.5" id="pool-p1-card">
+            <div class="game-profile-avatar-wrap game-profile-avatar-wrap--board">
+              <span class="game-profile-avatar-clip"><img id="pool-p1-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt=""></span>
+            </div>
+            <div class="side-body">
+              <div class="side-head">
+                <div class="side-line">
+                  <span id="pool-p1-name" class="side-name">Player 1</span>
+                  <span id="pool-p1-playing" class="side-role side-role-inline pool-badge hidden" hidden></span>
+                </div>
+                <div class="pool-side-score-row">
+                  <span class="pool-side-score">Score <strong id="pool-p1-score">0</strong></span>
+                  <div class="pool-profile-vel pool-vel-chip" data-telemetry-seat="player1" aria-label="Velocity">
+                    <span class="pool-vel-chip__label">Vel</span>
+                    <span class="pool-vel-chip__values">
+                      <span class="pool-vel-chip__num" data-pool-hud="xvel">0.000</span>
+                      <span class="pool-vel-chip__sep" aria-hidden="true">/</span>
+                      <span class="pool-vel-chip__num" data-pool-hud="yvel">0.000</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="board-player-tools">
+                <div class="pool-shot-hud pool-shot-hud--strip pool-board-chip-surface hidden" data-telemetry-seat="player1" aria-label="Player 1 shot data" hidden>
+                  <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Cue</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="cue-x">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="cue-y">0.00</span></span></div>
+                  <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Cur</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="cursor-x">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="cursor-y">0.00</span></span></div>
+                  <div class="pool-shot-hud-seg"><span class="pool-shot-hud-label">Vel</span><span class="pool-shot-hud-pair"><span class="pool-shot-hud-num" data-pool-hud="xvel">0.00</span><span class="pool-shot-hud-sep">/</span><span class="pool-shot-hud-num" data-pool-hud="yvel">0.00</span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="board-player-trailing">
+              <div id="pool-p1-cue-mode-slot" class="board-player-cue-mode-slot" aria-hidden="true"></div>
+              <div id="clock-profile-bottom-wrap" class="board-player-clock-wrap hidden" aria-label="Time left">
+                <kbd id="clock-profile-bottom" class="board-player-clock"></kbd>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="pool-cue-mode-home" class="hidden" data-game-only="pool" aria-hidden="true">
+        <div id="pool-cue-mode-cluster" class="pool-cue-mode-cluster pool-board-chip-surface hidden" aria-label="Ball in hand controls">
+          <p id="pool-bih-hint" class="pool-bih-hint" role="status">Move cue, then Shoot.</p>
+          <div id="pool-cue-mode-toggle" class="pool-cue-mode-toggle" role="group" aria-label="Cue mode">
+            <button id="pool-cue-mode-move-btn" type="button" class="pool-cue-mode-btn is-active" data-mode="move">Move</button>
+            <button id="pool-cue-mode-shoot-btn" type="button" class="pool-cue-mode-btn" data-mode="shoot">Shoot</button>
+          </div>
+        </div>
+      </div>
+
+      <nav class="game-mobile-board-hud" aria-label="Board quick controls">
+        <div class="game-mobile-board-hud-bar">
+{{GAME_MOBILE_HUD_MENU}}
+          <div class="game-mobile-replay-hud" role="toolbar" aria-label="Shot replay">
+            <button type="button" id="history-prev-mobile" class="game-hud-replay-btn game-btn-outline game-btn-sm" aria-label="Previous move">Prev</button>
+            <button type="button" id="history-next-mobile" class="game-hud-replay-btn game-btn-outline game-btn-sm" aria-label="Next move">Next</button>
+            <button type="button" id="history-live-mobile" class="game-hud-replay-btn game-btn-outline game-btn-sm" aria-label="Jump to live position">Live</button>
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Side drawer (shared chrome; game-specific tab panels) -->
+    <section id="game-side-drawer" class="game-panel side-panel right-panel game-scrollbar flex min-h-0 flex-col gap-3 p-4 sm:p-5">
+{{GAME_SIDE_DRAWER_HEADER}}
+      <div class="side-panel-main">
+        <div class="game-tab-row" role="tablist" aria-label="Game panel menu">
+          <button id="game-tab-analysis-btn" class="game-tab is-active flex-1" type="button" role="tab" aria-selected="true" data-game-tab-target="analysis" data-game-only="chezz">Analysis</button>
+          <button id="game-tab-analysis-btn" class="game-tab is-active flex-1" type="button" role="tab" aria-selected="true" data-game-tab-target="analysis" data-game-only="pool">Analysis</button>
+          <button id="game-tab-chat-btn" class="game-tab game-tab--badge flex-1" type="button" role="tab" aria-selected="false" data-game-tab-target="chat" aria-label="Chat">
+            <span class="game-tab-label">Chat</span>
+            <span id="game-tab-chat-badge" class="game-tab-badge" hidden aria-hidden="true"><span id="game-tab-chat-badge-count">0</span></span>
+          </button>
+          <button id="game-tab-rules-btn" class="game-tab flex-1" type="button" role="tab" aria-selected="false" data-game-tab-target="rules">Rules</button>
+          <button id="game-tab-actions-btn" class="game-tab flex-1" type="button" role="tab" aria-selected="false" data-game-tab-target="actions">Actions</button>
+        </div>
+
+        <div class="game-tab-panels min-h-0">
+          <!-- Chezz: Analysis -->
+          <section id="game-tab-analysis-panel" class="game-tab-panel" data-game-tab-panel="analysis" data-game-only="chezz" role="tabpanel" aria-labelledby="game-tab-analysis-btn">
+            <div class="meta analysis-meta">
+              <span id="turn-pill" class="game-pill">Turn: -</span>
+              <span id="moves-pill" class="game-pill">Moves: -</span>
+            </div>
+            <div id="game-clock-row" class="game-clock-row hidden" aria-label="Player clocks">
+              <span id="clock-white" class="game-clock-pill">White: 10:00</span>
+              <span id="clock-black" class="game-clock-pill">Black: 10:00</span>
+            </div>
+            <div id="fling-panel" class="game-inset-muted hidden flex flex-col gap-2">
+              <h3 class="game-section-heading">Catapult Fling</h3>
+              <p id="fling-label" class="game-note">Click an adjacent friendly piece to load the catapult.</p>
+              <button id="clear-fling-btn" type="button" class="game-btn-outline game-btn-sm mt-1">Clear Payload</button>
+            </div>
+            <div class="history-section game-inset-section flex flex-col gap-2">
+              <h3 class="game-section-heading">Moves</h3>
+              <div class="history-controls">
+                <button id="history-prev-btn" type="button" class="game-btn-outline game-btn-sm">Prev</button>
+                <button id="history-next-btn" type="button" class="game-btn-outline game-btn-sm">Next</button>
+                <button id="history-live-btn" type="button" class="game-btn-outline game-btn-sm">Live</button>
+              </div>
+              <ol id="history-list" class="history-list game-scrollbar"></ol>
+            </div>
+          </section>
+
+          <!-- Pool: Analysis (history + replay) -->
+          <section id="game-tab-analysis-panel" class="game-tab-panel" data-game-tab-panel="analysis" data-game-only="pool" role="tabpanel" aria-labelledby="game-tab-analysis-btn">
+            <div class="meta analysis-meta">
+              <span id="turn-pill" class="game-pill">Turn: —</span>
+              <span id="pool-moves-pill" class="game-pill">Moves: —</span>
+            </div>
+            <div id="game-clock-row" class="game-clock-row hidden" aria-label="Player clocks">
+              <span id="clock-white" class="game-clock-pill">Player 1: 10:00</span>
+              <span id="clock-black" class="game-clock-pill">Player 2: 10:00</span>
+            </div>
+            <div class="history-section game-inset-section flex flex-col gap-2">
+              <h3 class="game-section-heading">Moves</h3>
+              <div class="history-controls">
+                <button id="history-prev-btn" type="button" class="game-btn-outline game-btn-sm">Prev</button>
+                <button id="history-next-btn" type="button" class="game-btn-outline game-btn-sm">Next</button>
+                <button id="history-live-btn" type="button" class="game-btn-outline game-btn-sm">Live</button>
+              </div>
+              <ol id="history-list" class="history-list game-scrollbar"></ol>
+            </div>
+          </section>
+
+          <!-- Chezz: Rules -->
+          <section id="game-tab-rules-panel" class="game-tab-panel hidden" data-game-tab-panel="rules" data-game-only="chezz" role="tabpanel" aria-labelledby="game-tab-rules-btn">
+            <div class="rulebook-section game-inset-section flex min-h-0 flex-col">
+              <h3 class="game-section-heading">Rulebook</h3>
+              <div id="rulebook-list" class="rulebook-list game-scrollbar"></div>
+            </div>
+          </section>
+
+          <!-- Pool: Rules -->
+          <section id="game-tab-rules-panel" class="game-tab-panel hidden" data-game-tab-panel="rules" data-game-only="pool" role="tabpanel" aria-labelledby="game-tab-rules-btn">
+            <div class="rulebook-section game-inset-section flex min-h-0 flex-col">
+              <h3 class="game-section-heading">8-Ball Rules</h3>
+              <div id="pool-rulebook-list" class="rulebook-list game-scrollbar"></div>
+            </div>
+          </section>
+
+          <!-- Shared: Actions (one panel; copy differs via game theme) -->
+          <section id="game-tab-actions-panel" class="game-tab-panel hidden" data-game-tab-panel="actions" role="tabpanel">
+            <div class="game-actions-section game-inset-section flex flex-col gap-3">
+              <h3 class="game-section-heading">Game Actions</h3>
+              <div class="game-actions-grid">
+                <button class="game-draw-btn game-btn-outline game-btn-sm sm:game-btn-md" type="button" data-game-only="chezz">Offer Draw</button>
+                <button class="game-draw-btn game-btn-outline game-btn-sm sm:game-btn-md" type="button" data-game-only="pool">Offer Draw</button>
+                <button id="game-rematch-btn" class="game-btn-outline game-btn-sm sm:game-btn-md" type="button" disabled>Offer Rematch</button>
+                <button id="game-surrender-btn" class="game-btn-danger-outline game-btn-sm sm:game-btn-md" type="button">Surrender</button>
+              </div>
+              <p class="game-note mt-2 game-actions-note game-actions-note--chezz" data-game-only="chezz">Draw and rematch offers appear in the Chat tab. Accept or reject them there. Rematch is available after the game ends (PvP only).</p>
+              <p class="game-note mt-2 game-actions-note game-actions-note--pool" data-game-only="pool">Draw and rematch use the Chat tab (PvP). Surrender ends the current match.</p>
+            </div>
+          </section>
+
+{{GAME_CHAT_PANEL}}
+        </div>
+      </div>
+    </section>
+
+    <!-- Game over (shared overlay - same layout as VS/setup) -->
+    <section id="game-over-overlay" class="game-over-overlay-root game-over-scrim pointer-events-auto absolute inset-0 z-[10050] hidden flex items-center justify-center p-4 sm:p-6" aria-live="polite" aria-atomic="true">
+      <div class="game-over-inner game-panel game-over-panel game-modal-surface game-modal-card game-modal-card--popup relative">
+        <button id="game-over-close-btn" class="game-btn-circle game-over-close absolute right-2 top-2" type="button" aria-label="Close winner popup">✕</button>
+        <header class="game-setup-header game-over-header">
+          <p class="game-setup-role">Match result</p>
+          <h2 id="game-over-title" class="game-modal-heading game-modal-heading--md">Game Over</h2>
+          <div class="game-modal-divider" aria-hidden="true"></div>
+          <p id="game-over-subtitle" class="game-setup-status"></p>
+        </header>
+
+        <div class="game-setup-match game-over-matchup">
+          <div id="game-over-self-card" class="game-setup-player game-over-player">
+            <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+              <span class="game-over-winner-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M8 2h8v2h5v3a5 5 0 0 1-5 5h-.21A6 6 0 0 1 13 15.92V18h3v2H8v-2h3v-2.08A6 6 0 0 1 8.21 12H8a5 5 0 0 1-5-5V4h5V2Zm0 8V6H5v1a3 3 0 0 0 3 3Zm11-3V6h-3v4a3 3 0 0 0 3-3Z"/>
+                </svg>
+              </span>
+              <span class="game-profile-avatar-clip"><img id="game-over-self-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="You"></span>
+            </div>
+            <span id="game-over-self-name" class="game-setup-name">Player</span>
+            <span id="game-over-self-role" class="game-setup-role"></span>
+          </div>
+          <div class="game-setup-sep" aria-hidden="true"><span class="game-setup-vs">VS</span></div>
+          <div id="game-over-opponent-card" class="game-setup-player game-over-player">
+            <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+              <span class="game-over-winner-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                  <path d="M8 2h8v2h5v3a5 5 0 0 1-5 5h-.21A6 6 0 0 1 13 15.92V18h3v2H8v-2h3v-2.08A6 6 0 0 1 8.21 12H8a5 5 0 0 1-5-5V4h5V2Zm0 8V6H5v1a3 3 0 0 0 3 3Zm11-3V6h-3v4a3 3 0 0 0 3-3Z"/>
+                </svg>
+              </span>
+              <span class="game-profile-avatar-clip"><img id="game-over-opponent-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Opponent"></span>
+            </div>
+            <span id="game-over-opponent-name" class="game-setup-name">Opponent</span>
+            <span id="game-over-opponent-role" class="game-setup-role"></span>
+          </div>
+        </div>
+
+        <footer class="game-setup-footer game-over-footer">
+          <div class="game-over-actions-row">
+            <button id="game-over-lobby-btn" class="game-btn-outline game-btn-md" type="button">Lobby</button>
+            <button id="game-over-new-game-btn" class="game-btn-primary game-btn-md" type="button">Play Again</button>
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>

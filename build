@@ -1,0 +1,214 @@
+#!/usr/bin/env bash
+
+# Build pool + chezz engines and unified frontend assets. Optional run/stop subcommands.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")" && pwd)"
+SRC="${ROOT}/src"
+POOL="${SRC}/pool"
+CHEZZ="${SRC}/chezz"
+PLATFORM_FE="${SRC}/platform/frontend"
+LOG_DIR="${ROOT}/.dev-logs"
+PID_FILE="${LOG_DIR}/servers.pid"
+PORT="${GAMES_PORT:-8080}"
+
+die() { echo "error: $*" >&2; exit 1; }
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [command]
+
+Commands:
+  (none)    Build everything, then start the games server (same as "all")
+  build     Build pool engine, chezz engine, and frontend assets only
+  all       Build everything, then start the games server
+  run       Start the games server (no build)
+  start     Alias for run
+  restart   Stop, build, then start
+  stop      Stop the games server on port ${PORT}
+  clean     Remove engine objects, built frontend output, and dev logs
+  test      Run Python validation and frontend tests
+  typecheck Run strict frontend TypeScript checks
+  lint      Run frontend ESLint
+  audit     Run tests, checks, and dependency audit
+
+Environment:
+  GAMES_PORT   HTTP port (default: 8080)
+
+Requires ${ROOT}/.env (copy from .env.example) before run/start/all/restart.
+EOF
+}
+
+build_pool() {
+  echo "==> Pool engine (make)"
+  make -C "${POOL}/engine"
+}
+
+build_chezz() {
+  echo "==> Chezz engine (make)"
+  make -C "${CHEZZ}/engine"
+}
+
+build_frontend() {
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "==> Skipping frontend build (npm not found)"
+    return 0
+  fi
+  if [[ ! -d "${PLATFORM_FE}/node_modules" ]]; then
+    echo "==> npm install (platform frontend)"
+    (cd "${PLATFORM_FE}" && npm ci --no-audit --no-fund)
+  fi
+  echo "==> Frontend TypeScript + Tailwind CSS"
+  (cd "${PLATFORM_FE}" && npm run build) || die "Frontend build failed"
+}
+
+build_all() {
+  build_pool
+  build_chezz
+  build_frontend
+  echo ""
+  echo "Build complete."
+}
+
+test_all() {
+  python3 -m compileall -q "${SRC}"
+  if [[ -d "${ROOT}/tests" ]]; then
+    python3 -m unittest discover -s "${ROOT}/tests" -p 'test_*.py' -v
+  fi
+  (cd "${PLATFORM_FE}" && npm test)
+}
+
+typecheck_all() {
+  (cd "${PLATFORM_FE}" && npm run typecheck)
+}
+
+lint_all() {
+  (cd "${PLATFORM_FE}" && npm run lint)
+}
+
+audit_all() {
+  typecheck_all
+  lint_all
+  test_all
+  (cd "${PLATFORM_FE}" && npm audit --audit-level=high)
+}
+
+clean_all() {
+  echo "==> Pool engine (make clean)"
+  make -C "${POOL}/engine" clean
+  echo "==> Chezz engine (make clean)"
+  make -C "${CHEZZ}/engine" clean
+  echo "==> Frontend outputs"
+  rm -f \
+    "${PLATFORM_FE}/static/css/pool-tailwind.css" \
+    "${PLATFORM_FE}/static/css/chezz-tailwind.css"
+  (cd "${PLATFORM_FE}" && npm run clean:js)
+  echo "==> Dev logs"
+  rm -rf "${LOG_DIR}"
+  echo "==> Python caches"
+  find "${ROOT}/src" -type d -name __pycache__ -prune -exec rm -rf {} +
+  find "${ROOT}/src" -type f -name '*.pyc' -delete
+  rm -rf "${ROOT}/.pytest_cache" "${ROOT}/.ruff_cache"
+  rm -f "${ROOT}/.DS_Store"
+  echo ""
+  echo "Clean complete."
+}
+
+export_library_paths() {
+  export DYLD_LIBRARY_PATH="${POOL}/engine${DYLD_LIBRARY_PATH:+:${DYLD_LIBRARY_PATH}}"
+  export LD_LIBRARY_PATH="${POOL}/engine${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
+}
+
+stop_servers() {
+  if [[ -f "${PID_FILE}" ]]; then
+    while read -r pid _; do
+      [[ -n "${pid}" ]] && kill "${pid}" 2>/dev/null || true
+    done < "${PID_FILE}" || true
+    rm -f "${PID_FILE}"
+  fi
+  if command -v lsof >/dev/null 2>&1; then
+    lsof -ti ":${PORT}" 2>/dev/null | xargs kill -9 2>/dev/null || true
+  fi
+}
+
+require_env() {
+  if [[ ! -f "${ROOT}/.env" ]]; then
+    die "Missing ${ROOT}/.env — copy from .env.example and configure Supabase."
+  fi
+}
+
+run_server() {
+  require_env
+  mkdir -p "${LOG_DIR}"
+  export_library_paths
+
+  echo "==> Starting games server on http://127.0.0.1:${PORT}"
+  python3 "${SRC}/platform/serve.py" --host 127.0.0.1 --port "${PORT}" \
+    >"${LOG_DIR}/games.log" 2>&1 &
+  echo $! >> "${PID_FILE}"
+
+  sleep 1
+  if command -v curl >/dev/null 2>&1; then
+    if ! curl -sf "http://127.0.0.1:${PORT}/api/health" >/dev/null; then
+      echo "warning: health check failed — see ${LOG_DIR}/games.log"
+    fi
+  fi
+
+  echo ""
+  echo "Games: http://127.0.0.1:${PORT}  (log: ${LOG_DIR}/games.log)"
+  echo "Stop:  ${ROOT}/build stop"
+}
+
+cmd="${1:-all}"
+
+case "${cmd}" in
+  build)
+    build_all
+    ;;
+  all)
+    build_all
+    stop_servers
+    mkdir -p "${LOG_DIR}"
+    : > "${PID_FILE}"
+    run_server
+    ;;
+  run|start)
+    stop_servers
+    mkdir -p "${LOG_DIR}"
+    : > "${PID_FILE}"
+    run_server
+    ;;
+  restart)
+    stop_servers
+    build_all
+    mkdir -p "${LOG_DIR}"
+    : > "${PID_FILE}"
+    run_server
+    ;;
+  stop)
+    stop_servers
+    echo "Stopped games server on ${PORT}."
+    ;;
+  clean)
+    stop_servers
+    clean_all
+    ;;
+  test)
+    test_all
+    ;;
+  typecheck)
+    typecheck_all
+    ;;
+  lint)
+    lint_all
+    ;;
+  audit)
+    audit_all
+    ;;
+  -h|--help|help)
+    usage
+    ;;
+  *)
+    die "Unknown command: ${cmd} (try --help)"
+    ;;
+esac

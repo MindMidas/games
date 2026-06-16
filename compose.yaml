@@ -1,0 +1,81 @@
+services:
+  games:
+    image: games:latest
+    container_name: games
+    build:
+      context: .
+    env_file:
+      - .env
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+      GAMES_ALLOWED_HOSTS: ${DOMAIN:?Set DOMAIN in .env}
+      GAMES_ENV: production
+      GAMES_RATE_LIMIT: "1"
+      GAMES_TRUSTED_PROXY_IPS: 172.30.0.2
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 20s
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    expose:
+      - "8080"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          python3 -c "import http.client,os;
+          c=http.client.HTTPConnection('127.0.0.1',8080,timeout=5);
+          c.request('GET','/api/ready',headers={'Host':os.environ['DOMAIN']});
+          raise SystemExit(0 if c.getresponse().status==200 else 1)"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      games_net:
+        ipv4_address: 172.30.0.3
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  caddy:
+    image: caddy:2.10-alpine
+    container_name: games-proxy
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN in .env}
+    restart: unless-stopped
+    depends_on:
+      games:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      games_net:
+        ipv4_address: 172.30.0.2
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  games_net:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
+volumes:
+  caddy_data:
+  caddy_config:

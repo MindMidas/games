@@ -1,0 +1,414 @@
+/*
+ * Shared game drawer, mobile HUD, and desktop side-panel layout (Pool + Chezz).
+ * Uses per-game theme.css variables (--color-*).
+ */
+
+.top-shell {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.brand-block {
+  display: grid;
+  gap: 0.7rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.brand-block h1 {
+  margin: 0;
+}
+
+.top-actions {
+  justify-content: center;
+  width: 100%;
+  gap: 0.52rem;
+  flex-wrap: nowrap;
+}
+
+.top-actions.game-drawer-actions {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  max-width: 22rem;
+  margin-inline: auto;
+  gap: 0.45rem;
+}
+
+.top-actions.game-drawer-actions .game-drawer-action-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 2.125rem;
+  max-height: 2.75rem;
+  padding: 0.35rem 0.5rem;
+  font-size: calc(0.75rem * var(--game-scale-font, 1));
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Live aim and shot-strike cue render fullscreen; hide it behind the mobile drawer. */
+#pool-global-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 15;
+}
+
+#game-app.game-drawer-open #pool-global-overlay {
+  visibility: hidden;
+}
+
+@media (max-width: 1180px), (max-height: 760px) {
+  /* Legacy / stray replay nodes must not paint above the slide-in drawer. */
+  #game-app.game-drawer-open #pool-svg-container .pool-svg-overlay [data-ui="cue-stick"] {
+    display: none !important;
+  }
+}
+
+.game-mobile-board-hud {
+  display: none;
+}
+
+.game-drawer-scrim,
+.game-drawer-close-btn {
+  display: none;
+}
+
+#game-app > #game-over-overlay.game-over-overlay-root {
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  align-self: stretch;
+  justify-self: stretch;
+  width: auto;
+  height: auto;
+  min-height: 0;
+}
+
+@media (min-width: 940px) {
+  #game-app.app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(
+      280px,
+      var(--game-side-effective, min(var(--game-side-width), 36%))
+    );
+    grid-template-rows: minmax(0, 1fr);
+    height: 100dvh;
+    min-height: 0;
+    max-height: 100dvh;
+    padding: 0 1.05rem;
+    column-gap: 0.75rem;
+    align-items: stretch;
+    justify-content: stretch;
+    overflow: hidden;
+  }
+
+  .board-panel {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    justify-content: stretch;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .side-panel {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    max-width: var(--game-side-effective, var(--game-side-width));
+    min-width: 0;
+    align-self: stretch;
+    height: 100%;
+    max-height: 100dvh;
+    font-size: calc(0.88rem * var(--game-ui-scale, var(--game-scale-font, 1)));
+    overflow: hidden;
+  }
+
+  .side-panel-main {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+  }
+}
+
+@media (max-width: 1180px), (max-height: 760px) {
+  .game-mobile-board-hud {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 45;
+    justify-content: stretch;
+    align-items: flex-end;
+    padding: 0;
+    pointer-events: none;
+    background: transparent;
+    border-top: 0;
+    box-shadow: none;
+  }
+
+  #game-app.game-drawer-open .game-mobile-board-hud {
+    pointer-events: none;
+  }
+
+  #game-app.game-drawer-open .game-mobile-board-hud-bar,
+  #game-app.game-drawer-open .game-mobile-board-hud-bar * {
+    pointer-events: none;
+  }
+
+  .game-mobile-board-hud-bar {
+    pointer-events: auto;
+    display: flex;
+    width: 100%;
+    max-width: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.65rem;
+    padding-bottom: max(0.55rem, calc(0.35rem + env(safe-area-inset-bottom, 0px)));
+    flex-wrap: nowrap;
+    min-height: calc(3.15rem + env(safe-area-inset-bottom, 0px));
+    border-radius: 0;
+    border-width: 1px 0 0;
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--color-accent) 35%, transparent);
+    border-bottom: none;
+    background: color-mix(in srgb, var(--color-bg-elev1) 96%, transparent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .game-drawer-open-btn {
+    position: relative;
+    font-size: calc(0.76rem * var(--game-scale-font, 1));
+    padding: 0.38rem 0.65rem;
+    flex-shrink: 0;
+    font-weight: 600;
+    min-height: 2.35rem;
+  }
+
+  .game-drawer-chat-badge {
+    position: absolute;
+    top: -0.34rem;
+    right: -0.36rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    padding: 0 0.22rem;
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-primary-fg);
+    background: var(--color-accent);
+    border: 1.5px solid var(--color-bg-elev1);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 45%, transparent);
+    pointer-events: none;
+  }
+
+  .game-drawer-chat-badge-count {
+    display: block;
+    line-height: 1;
+  }
+
+  .game-drawer-chat-badge[hidden] {
+    display: none !important;
+  }
+
+  .game-drawer-scrim {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: color-mix(in srgb, var(--color-bg) 52%, transparent);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    cursor: pointer;
+  }
+
+  #game-app.game-drawer-open .game-drawer-scrim {
+    display: block;
+  }
+
+  #game-app .side-panel.right-panel {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+    width: min(100vw - 2rem, 22.5rem);
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    z-index: 60;
+    transform: translateX(100%);
+    transition: transform 0.22s ease-out;
+    pointer-events: none;
+    overflow: hidden;
+    border-radius: 0;
+    border: none;
+    background: color-mix(in srgb, var(--color-bg-elev1) 98%, transparent);
+    box-shadow: -16px 0 42px rgba(0, 0, 0, 0.5);
+  }
+
+  #game-app.game-drawer-open .side-panel.right-panel {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  /* While the mobile drawer is open, hard-disable board interactions behind it. */
+  #game-app.game-drawer-open .board-panel,
+  #game-app.game-drawer-open .board-middle,
+  #game-app.game-drawer-open #pool-svg-container,
+  #game-app.game-drawer-open .chezz-board-sized {
+    pointer-events: none !important;
+  }
+
+  .game-drawer-close-btn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    left: max(0.35rem, env(safe-area-inset-left, 0px));
+    top: max(0.4rem, env(safe-area-inset-top, 0px));
+    z-index: 70;
+    width: 1.85rem;
+    height: 1.85rem;
+    padding: 0;
+    margin: 0;
+    border: 1px solid color-mix(in srgb, var(--color-accent) 32%, transparent);
+    border-radius: 0.4rem;
+    background: color-mix(in srgb, var(--color-bg-elev1) 88%, transparent);
+    color: var(--color-fg);
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+
+  #game-app .top-shell-panel {
+    --game-drawer-head-gutter: calc(2.35rem + max(0.35rem, env(safe-area-inset-left, 0px)));
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0.62rem 0.72rem calc(0.42rem + env(safe-area-inset-top, 0px));
+    padding-left: var(--game-drawer-head-gutter);
+    padding-right: var(--game-drawer-head-gutter);
+    border-radius: 0;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: color-mix(in srgb, var(--color-accent) 28%, transparent);
+    background-color: color-mix(in srgb, var(--color-bg-elev1) 98%, transparent);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  #game-app .side-panel-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
+    width: 100%;
+    padding: 0.62rem 0.72rem 0.72rem;
+    padding-bottom: calc(0.72rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.62rem;
+    overflow: hidden;
+  }
+
+  #game-app .side-panel-main > [role="tablist"] {
+    align-self: stretch;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.32rem 0.28rem;
+    flex-shrink: 0;
+  }
+
+  #game-app .side-panel-main .game-tab-panels {
+    display: flex;
+    flex: 3 1 0;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  #game-app .side-panel-main .game-tab-panel:not(.hidden) {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #game-app .side-panel-main .game-tab-panel.hidden {
+    display: none !important;
+  }
+
+  #game-tab-chat-panel:not(.hidden) .game-chat-panel {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  #game-tab-chat-panel .chat-list {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .game-drawer-open-label {
+    display: inline-block;
+  }
+
+  .game-drawer-chat-badge-icon {
+    width: 0.72rem;
+    height: 0.72rem;
+    display: block;
+  }
+
+  .game-drawer-close-btn:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--color-accent) 65%, transparent);
+    outline-offset: 2px;
+  }
+
+  .game-drawer-close-icon {
+    display: block;
+    font-size: 1.12rem;
+    font-weight: 700;
+    line-height: 1;
+    transform: translateX(-0.04rem);
+  }
+
+  .game-mobile-replay-hud {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+  }
+}

@@ -1,0 +1,161 @@
+/*
+ * Shared typography - DM Sans for UI, JetBrains Mono for clocks/scores/codes only.
+ * Loaded after game CSS so lobby/auth/in-game chrome stay consistent across Chezz & Pool.
+ */
+
+html,
+body {
+  font-family: var(--font-display);
+  font-size: var(--font-size-base);
+  line-height: 1.45;
+}
+
+/* Headings & section labels */
+
+.game-shell-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.lobby-page-title {
+  text-align: center;
+}
+
+.game-shell-title--arena,
+#game-app .game-shell-title {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.game-section-label {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+
+.game-field-label {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.game-shell-subtitle {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+/* Body copy tiers */
+
+.game-body {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.game-caption {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.game-code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stats row */
+
+.game-stat {
+  padding: 0.625rem 0.5rem;
+  text-align: center;
+}
+
+.game-stat-label {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  margin-bottom: 0.2rem;
+}
+
+.game-stat-value {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Alerts & notes */
+
+.game-alert,
+.game-alert p,
+#lobby-active-game-message {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+.game-muted-text,
+.game-note {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+#lobby-user-name {
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* Arena / modal titles stay branded mono */
+.game-modal-heading,
+.app-loading-title {
+  font-family: var(--font-mono);
+}
+
+/* -- Leaderboard (structure + readable sizes; row tint stays in per-game CSS) - */
+
+.leaderboard-empty {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.leaderboard-row {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.leaderboard-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.leaderboard-rank {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.leaderboard-stats {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+}

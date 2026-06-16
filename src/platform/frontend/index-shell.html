@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" class="h-full game-scrollbar" data-game="{{GAME_ID}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{THEME_COLOR}}">
+  <meta name="mm-game-id" content="{{GAME_ID}}">
+  <style id="mm-critical-page-bg">{{CRITICAL_PAGE_STYLE}}</style>
+  <script type="importmap" src="/static/games/import-map.json?v={{JS_BUST}}"></script>
+  <script src="/static/games/platform/js/shellEarlyGame.js?v={{JS_BUST}}" data-mm-game="{{GAME_ID}}"></script>
+  <title>{{PAGE_TITLE}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,500&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  {{GAME_STYLES}}
+</head>
+<body class="booting">
+  <div id="app-loading-screen" class="app-loading-screen game-overlay-field game-overlay-field--blobs" aria-live="polite">
+{{SCATTER_FRAGMENT}}
+<div class="app-loading-inner game-panel game-modal-surface game-modal-card game-modal-card--popup">
+      {{LOADING_LOGO_FRAGMENT}}
+      <h2 class="app-loading-title">{{LOADING_TITLE}}</h2>
+      <div class="game-modal-divider" aria-hidden="true"></div>
+      <div class="app-loading-spinner" aria-hidden="true">
+        <span class="app-loading-dot"></span>
+        <span class="app-loading-dot"></span>
+        <span class="app-loading-dot"></span>
+      </div>
+      <p class="app-loading-text">Loading&hellip;</p>
+    </div>
+  </div>
+
+  <div id="notification-stack" class="game-toast-stack" aria-live="polite"></div>
+
+  <div id="game-setup-screen" class="game-setup-screen game-overlay-field game-overlay-field--blobs fade-out" aria-live="polite">
+{{SCATTER_FRAGMENT}}
+<div class="game-setup-inner game-panel game-modal-surface game-modal-card game-modal-card--popup">
+      <header class="game-setup-header">
+        <h2 id="game-setup-title" class="game-modal-heading game-modal-heading--md">Opponent Found</h2>
+        <div class="game-modal-divider" aria-hidden="true"></div>
+      </header>
+      <div class="game-setup-match">
+        <div class="game-setup-player">
+          <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+            <span class="game-profile-avatar-clip"><img id="game-setup-self-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Your avatar"></span>
+          </div>
+          <span id="game-setup-self-name" class="game-setup-name">You</span>
+          <span class="game-setup-role">You</span>
+        </div>
+        <div class="game-setup-sep" aria-hidden="true">
+          <span class="game-setup-vs">VS</span>
+        </div>
+        <div class="game-setup-player">
+          <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+            <span class="game-profile-avatar-clip"><img id="game-setup-opponent-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Opponent avatar"></span>
+          </div>
+          <span id="game-setup-opponent-name" class="game-setup-name">Opponent</span>
+          <span class="game-setup-role">Opponent</span>
+        </div>
+      </div>
+      <footer class="game-setup-footer">
+        <div class="app-loading-spinner" aria-hidden="true">
+          <span class="app-loading-dot"></span>
+          <span class="app-loading-dot"></span>
+          <span class="app-loading-dot"></span>
+        </div>
+        <p id="game-setup-status" class="game-setup-status">{{SETUP_STATUS_DEFAULT}}</p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Auth -->
+  <section id="home-screen" class="screen hidden">
+    {{SCATTER_FRAGMENT}}
+<div class="game-panel w-full max-w-sm relative z-10">
+      <button id="home-back-btn" type="button" class="game-btn-ghost game-btn-sm absolute left-2 top-2 text-lg font-bold" aria-label="Back to portfolio" title="Back to portfolio">‹</button>
+      <div class="hub-shell-body flex flex-col gap-5 p-5 pt-12 sm:p-6">
+        <div class="hub-shell-intro flex flex-col gap-1.5 text-center">
+          <h2 class="game-shell-title">{{ACCOUNT_HEADING}}</h2>
+          <p id="auth-tagline" class="game-caption game-muted-text">{{ACCOUNT_TAGLINE}}</p>
+        </div>
+        <div class="game-tab-row hub-shell-tabs mx-auto w-full max-w-xs" role="tablist" aria-label="Account mode">
+          <button id="auth-mode-signin-btn" class="game-tab is-active" type="button" role="tab" aria-selected="true">Sign In</button>
+          <button id="auth-mode-signup-btn" class="game-tab" type="button" role="tab" aria-selected="false">Sign Up</button>
+        </div>
+        <section id="auth-login-card">
+          <div class="hub-shell-form flex flex-col gap-3.5">
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Username</span>
+              <input id="auth-login-username-input" class="game-input game-input-xs" type="text" maxlength="20" placeholder="Username" autocomplete="username">
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Password</span>
+              <div class="relative">
+                <input id="auth-login-password-input" class="game-input game-input-xs w-full pr-10" type="password" maxlength="128" placeholder="Password" autocomplete="current-password">
+                <button id="auth-login-password-toggle-btn" class="password-toggle-btn game-btn-ghost game-btn-sm absolute right-1 top-1/2 -translate-y-1/2 px-1" type="button" aria-label="Show password">
+                  <svg class="password-toggle-icon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path><circle cx="12" cy="12" r="3.2"></circle><path class="password-toggle-slash" d="M4 4l16 16"></path></svg>
+                </button>
+              </div>
+            </label>
+            <button id="auth-login-btn" class="game-btn-primary game-btn-sm mt-1 w-full justify-center" type="button">Sign In</button>
+          </div>
+        </section>
+        <section id="auth-register-card" class="hidden">
+          <div class="hub-shell-form flex flex-col gap-3.5">
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Username</span>
+              <input id="auth-register-username-input" class="game-input game-input-xs" type="text" maxlength="20" placeholder="Choose a username" autocomplete="username">
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Password</span>
+              <div class="relative">
+                <input id="auth-register-password-input" class="game-input game-input-xs w-full pr-10" type="password" maxlength="128" placeholder="Create a password" autocomplete="new-password">
+                <button id="auth-register-password-toggle-btn" class="password-toggle-btn game-btn-ghost game-btn-sm absolute right-1 top-1/2 -translate-y-1/2 px-1" type="button" aria-label="Show password">
+                  <svg class="password-toggle-icon h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"></path><circle cx="12" cy="12" r="3.2"></circle><path class="password-toggle-slash" d="M4 4l16 16"></path></svg>
+                </button>
+              </div>
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Photo URL <span class="font-normal game-muted-text">(Optional)</span></span>
+              <input id="auth-register-photo-input" class="game-input game-input-xs" type="url" maxlength="500" placeholder="https://...">
+            </label>
+            <button id="auth-register-btn" class="game-btn-primary game-btn-sm mt-1 w-full justify-center" type="button">Create Account</button>
+            <p class="text-center game-caption game-muted-text">Profile photo is optional and can be changed later.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game picker (hub: after sign-in) -->
+  <section id="game-menu-screen" class="screen screen--hub-menu hidden">
+    <div class="hub-menu-shell w-full max-w-4xl relative z-10 mx-auto px-3 sm:px-4">
+      <div class="hub-menu-panel game-panel p-4 sm:p-5">
+        <div class="hub-menu-layout">
+          <section class="hub-menu-games flex flex-col gap-3 min-w-0">
+            <div class="hub-shell-intro flex flex-col gap-1 text-center sm:text-left">
+              <h2 class="game-shell-title">Choose a Game</h2>
+              <p class="game-caption game-muted-text">Real pool physics on one side, zombie chess on the other.</p>
+            </div>
+            <div class="hub-menu-game-picker" role="group" aria-label="Games">
+              <button id="game-menu-pool-btn" type="button" class="hub-game-card hub-game-card--pool">
+                <div class="hub-game-card__copy">
+                  <span class="hub-game-card__title">Pool</span>
+                  <span class="hub-game-card__blurb">Classic 8-ball on a clean table&mdash;pass-and-play on one device or match online.</span>
+                  <p class="hub-game-card__goal">Goal: pocket all balls in your assigned group (solids 1&ndash;7 or stripes 9&ndash;15), then legally pocket the 8-ball to win.</p>
+                </div>
+                <div class="hub-game-card__pieces" aria-hidden="true">
+                  <img src="/static/games/pool/assets/balls/solid-1.svg" alt="">
+                  <img src="/static/games/pool/assets/balls/solid-3.svg" alt="">
+                  <img src="/static/games/pool/assets/balls/solid-5.svg" alt="">
+                  <img src="/static/games/pool/assets/balls/eight.svg" alt="">
+                  <img src="/static/games/pool/assets/balls/stripe-9.svg" alt="">
+                  <img src="/static/games/pool/assets/balls/stripe-12.svg" alt="">
+                </div>
+              </button>
+              <button id="game-menu-chezz-btn" type="button" class="hub-game-card hub-game-card--chezz">
+                <div class="hub-game-card__copy">
+                  <span class="hub-game-card__title">Chezz</span>
+                  <span class="hub-game-card__blurb">Chess with extra pieces and abilities&mdash;practice against the engine or play live.</span>
+                  <p class="hub-game-card__goal">Goal: capture the opponent&rsquo;s king to win&mdash;no check or checkmate; the game ends when one king remains.</p>
+                </div>
+                <div class="hub-game-card__pieces" aria-hidden="true">
+                  <img src="/static/games/chezz/assets/pieces/wZ.png" alt="">
+                  <img src="/static/games/chezz/assets/pieces/wC.png" alt="">
+                  <img src="/static/games/chezz/assets/pieces/wN.png" alt="">
+                  <img src="/static/games/chezz/assets/pieces/wB.png" alt="">
+                  <img src="/static/games/chezz/assets/pieces/bZ.png" alt="">
+                  <img src="/static/games/chezz/assets/pieces/bF.png" alt="">
+                </div>
+              </button>
+            </div>
+          </section>
+          <aside class="hub-menu-account flex flex-col gap-3 min-w-0">
+            <h3 class="game-section-label">Manage Account</h3>
+            <div class="hub-menu-account-identity game-account-chip flex items-center gap-3 rounded-lg px-3 py-2.5">
+              <span class="game-profile-avatar-wrap game-profile-avatar-wrap--md hub-menu-account-avatar">
+                <span class="game-profile-avatar-clip"><img id="game-menu-user-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Your avatar"></span>
+              </span>
+              <div class="min-w-0 flex-1">
+                <p class="game-field-label">Signed in as</p>
+                <p id="game-menu-user-name" class="truncate font-semibold">Player</p>
+              </div>
+            </div>
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Username</span>
+              <input id="game-menu-settings-username-input" class="game-input game-input-xs" type="text" maxlength="20" placeholder="Username" autocomplete="username">
+            </label>
+            <label class="flex flex-col gap-1">
+              <span class="game-field-label">Photo URL <span class="font-normal game-muted-text">(optional)</span></span>
+              <input id="game-menu-settings-photo-input" class="game-input game-input-xs" type="url" maxlength="500" placeholder="https://...">
+            </label>
+            <button id="game-menu-settings-save-btn" class="game-btn-primary game-btn-sm w-full justify-center" type="button">Save Profile</button>
+            <p class="game-caption game-muted-text -mt-0.5">Direct image URL, or leave empty for the default avatar.</p>
+            <button id="game-menu-signout-btn" class="game-btn-outline game-btn-sm w-full justify-center hub-menu-signout" type="button">Sign Out</button>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lobby -->
+  <section id="lobby-screen" class="screen hidden">
+    {{SCATTER_FRAGMENT}}
+<div class="lobby-shell z-10 w-full max-w-5xl px-3 flex flex-col gap-3 min-w-0">
+      <div class="game-panel min-w-0">
+        <div class="lobby-panel-body flex flex-col gap-4 p-4 sm:p-5 md:p-6">
+          <div class="lobby-header">
+            <button id="lobby-back-menu-btn" type="button" class="lobby-back-menu-btn" aria-label="Back to game menu" title="Back to games">
+              <span class="lobby-back-menu-btn__icon" aria-hidden="true">←</span>
+              <span class="lobby-back-menu-btn__label">Games</span>
+            </button>
+            <h2 class="game-shell-title lobby-page-title">{{LOBBY_HEADING}}</h2>
+            <span class="lobby-header-spacer" aria-hidden="true"></span>
+          </div>
+          <div class="lobby-layout">
+            <div class="lobby-layout-main flex flex-col gap-4 min-w-0">
+              <div class="game-panel-muted p-4 sm:p-5">
+                <div class="flex flex-col gap-3">
+                  <h3 class="game-section-label">Play</h3>
+                  <div class="lobby-play-grid">
+{{LOBBY_PLAY_BUTTONS}}
+                  </div>
+                  <div class="lobby-join-row flex gap-2 min-w-0">
+                    <input id="lobby-join-code-input" class="game-input game-input-xs flex-1 min-w-0" type="text" placeholder="Enter invite code" aria-label="Invite code" maxlength="20">
+                    <button id="lobby-join-code-btn" class="game-btn-primary game-btn-sm" type="button">Join</button>
+                  </div>
+                </div>
+              </div>
+              <div class="lobby-stats-grid grid w-full grid-cols-2 gap-2 sm:grid-cols-4 min-w-0">
+                <div class="game-stat"><div class="game-stat-label">Wins</div><div id="lobby-record-wins" class="game-stat-value">0</div></div>
+                <div class="game-stat"><div class="game-stat-label">Draws</div><div id="lobby-record-draws" class="game-stat-value">0</div></div>
+                <div class="game-stat"><div class="game-stat-label">Losses</div><div id="lobby-record-losses" class="game-stat-value">0</div></div>
+                <div class="game-stat"><div class="game-stat-label">Online</div><div id="online-count-value" class="game-stat-value">0</div><span id="online-count-pill" class="hidden" aria-hidden="true"></span></div>
+              </div>
+              <div id="lobby-active-game-panel" class="game-alert lobby-active-game-panel hidden" role="alert" aria-live="polite">
+                <div class="lobby-active-game-panel__icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="lobby-active-game-panel__body">
+                  <p id="lobby-active-game-message" class="game-body">You have an unfinished game. Rejoin or forfeit before starting another.</p>
+                  <div class="lobby-active-game-panel__actions">
+                    <button id="lobby-rejoin-game-btn" class="game-btn-primary game-btn-sm" type="button">Rejoin game</button>
+                    <button id="lobby-withdraw-game-btn" class="game-btn-outline game-btn-sm" type="button">Withdraw (forfeit)</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <aside class="lobby-layout-leaderboard game-panel-muted p-4 sm:p-5 flex flex-col min-h-0 min-w-0">
+              <h3 id="lobby-leaderboard-title" class="game-section-label shrink-0">Leaderboard</h3>
+              <div id="lobby-leaderboard-list" class="leaderboard-list game-scrollbar mt-3 min-h-0 flex-1" role="list"></div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Missing game / bad link (shared; neutral hub chrome - no game scatter) -->
+  <section id="not-found-screen" class="screen screen--neutral hidden" aria-labelledby="not-found-title">
+    <div class="game-panel game-modal-surface game-modal-card game-modal-card--popup w-full max-w-sm relative z-10">
+      <div class="hub-shell-body flex flex-col gap-5 p-5 sm:p-6 text-center">
+        <div class="hub-shell-intro flex flex-col gap-1.5">
+          <p class="game-setup-role m-0">404</p>
+          <h2 id="not-found-title" class="game-shell-title m-0">Page not found</h2>
+          <div class="game-modal-divider" aria-hidden="true"></div>
+          <p id="not-found-body" class="game-caption game-muted-text m-0">This link is not valid. It may be mistyped, outdated, or the game may have been removed.</p>
+        </div>
+        <button id="not-found-lobby-btn" class="game-btn-primary game-btn-md w-full justify-center" type="button">Back to lobby</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Matchmaking (same overlay + card chrome as VS/setup + game-over) -->
+  <section id="matchmaking-screen" class="game-setup-screen game-overlay-field game-overlay-field--blobs screen hidden" aria-live="polite">
+    {{SCATTER_FRAGMENT}}
+    <div class="game-setup-inner game-panel game-modal-surface game-modal-card game-modal-card--popup">
+      <header class="game-setup-header">
+        <p class="game-setup-role">Online play</p>
+        <h2 class="game-modal-heading game-modal-heading--md">Matchmaking</h2>
+        <div class="game-modal-divider" aria-hidden="true"></div>
+        <p id="matchmaking-status" class="game-setup-status">{{MM_SUBTITLE}}</p>
+      </header>
+      <div class="game-setup-match game-mm-matchup" aria-label="Matchmaking queue players">
+        <div class="game-setup-player">
+          <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+            <span class="game-profile-avatar-clip"><img id="matchmaking-self-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Your avatar"></span>
+          </div>
+          <span id="matchmaking-self-name" class="game-setup-name">Player</span>
+          <span class="game-setup-role">You</span>
+        </div>
+        <div class="game-setup-sep" aria-hidden="true"><span class="game-setup-vs">VS</span></div>
+        <div id="matchmaking-opponent-card" class="game-setup-player is-searching">
+          <div class="game-profile-avatar-wrap game-profile-avatar-wrap--xl">
+            <span class="game-profile-avatar-clip"><img id="matchmaking-opponent-avatar" class="game-profile-avatar" src="{{DEFAULT_AVATAR}}" alt="Opponent avatar"></span>
+          </div>
+          <span id="matchmaking-opponent-name" class="game-setup-name"></span>
+          <span class="game-mm-dots game-mm-dots--search" aria-hidden="true">
+            <span class="game-mm-dot"></span>
+            <span class="game-mm-dot"></span>
+            <span class="game-mm-dot"></span>
+          </span>
+          <span class="game-setup-role">Opponent</span>
+        </div>
+      </div>
+      <footer class="game-setup-footer game-mm-footer">
+        <button id="matchmaking-cancel-btn" class="game-btn-outline game-btn-md" type="button">Cancel</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- Game (layout mirrors Chezz #game-app; blue theme + pool table) -->
+  {{GAME_APP_FRAGMENT}}
+
+  <div id="lobby-invite-modal" class="fixed inset-0 hidden" role="dialog" aria-modal="true" aria-labelledby="invite-modal-title">
+    <div class="fixed inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div class="game-panel game-modal-surface game-modal-card game-modal-card--popup relative">
+        <div class="flex flex-col gap-3 p-5 sm:p-6">
+          <header class="flex w-full flex-col items-center gap-1.5 text-center">
+            <h2 id="invite-modal-title" class="game-modal-heading game-modal-heading--md">Invite a Friend</h2>
+            <div class="game-modal-divider" aria-hidden="true"></div>
+          </header>
+          <p class="game-note text-center">Share this link or code. When they join, the game will start.</p>
+          <div class="flex gap-2">
+            <input id="lobby-invite-link-input" class="game-input game-input-xs flex-1 min-w-0" type="text" readonly aria-label="Invite link">
+            <button id="lobby-invite-copy-btn" class="game-btn-primary game-btn-sm" type="button">Copy</button>
+          </div>
+          <p class="game-body text-center">Code: <strong id="lobby-invite-code" class="game-code tracking-widest"></strong></p>
+          <p class="game-note game-caption text-center">Link and code expire in 5 minutes if no one joins.</p>
+          <div class="flex justify-center gap-3 pt-2">
+            <button id="lobby-invite-modal-close" class="game-btn-outline game-btn-sm" type="button">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="app-confirm-overlay" class="app-confirm-overlay-root app-confirm-scrim fixed inset-0 z-[10100] hidden flex items-center justify-center p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="app-confirm-title">
+    <div class="game-panel app-confirm-panel game-modal-surface game-modal-card game-modal-card--popup relative">
+      <div class="app-confirm-body flex flex-col gap-4 p-5">
+        <header class="app-confirm-header flex w-full flex-col items-center gap-1.5 text-center">
+          <h2 id="app-confirm-title" class="game-modal-heading game-modal-heading--md">Confirm</h2>
+          <div class="game-modal-divider" aria-hidden="true"></div>
+        </header>
+        <p id="app-confirm-message" class="game-setup-status m-0 text-center"></p>
+        <div class="app-confirm-actions grid grid-cols-2 gap-3">
+          <button id="app-confirm-cancel-btn" class="game-btn-outline game-btn-sm sm:game-btn-md app-confirm-btn app-confirm-cancel" type="button">Cancel</button>
+          <button id="app-confirm-ok-btn" class="game-btn-primary game-btn-sm sm:game-btn-md app-confirm-btn app-confirm-ok" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="{{APP_SCRIPT}}?v={{JS_BUST}}"></script>
+</body>
+</html>

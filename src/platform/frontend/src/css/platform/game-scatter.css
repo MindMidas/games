@@ -1,0 +1,79 @@
+/*
+ * Decorative background scatter (chess pieces / pool balls).
+ * Parent uses .game-scatter with a game-specific modifier.
+ */
+
+.game-scatter {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#game-app .game-scatter {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.scatter-piece {
+  position: absolute;
+  width: clamp(28px, min(5vw, 5.5vh), 78px);
+  height: auto;
+  object-fit: contain;
+  transform: rotate(var(--piece-rot, 0deg));
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Chezz: softer green shadow */
+.game-scatter--chezz .scatter-piece {
+  opacity: 0.23;
+  filter: drop-shadow(0 4px 12px rgba(4, 33, 18, 0.5));
+}
+
+/* Pool: blue shadow */
+.game-scatter--pool .scatter-piece {
+  opacity: 0.28;
+  filter: drop-shadow(0 4px 12px rgba(8, 30, 60, 0.45));
+}
+
+.scatter-piece.piece-w-1 { top: 8%; left: 6%; --piece-rot: -12deg; }
+.scatter-piece.piece-w-2 { top: 20%; left: 10%; --piece-rot: 8deg; }
+.scatter-piece.piece-w-3 { top: 32%; left: 5%; --piece-rot: -10deg; }
+.scatter-piece.piece-w-4 { top: 44%; left: 9%; --piece-rot: 6deg; }
+.scatter-piece.piece-w-5 { top: 56%; left: 7%; --piece-rot: -9deg; }
+.scatter-piece.piece-w-6 { top: 68%; left: 11%; --piece-rot: 7deg; }
+.scatter-piece.piece-w-7 { top: 80%; left: 5%; --piece-rot: -11deg; }
+.scatter-piece.piece-w-8 { top: 92%; left: 8%; --piece-rot: 5deg; }
+.scatter-piece.piece-b-1 { top: 8%; right: 6%; left: auto; --piece-rot: 12deg; }
+.scatter-piece.piece-b-2 { top: 20%; right: 10%; left: auto; --piece-rot: -8deg; }
+.scatter-piece.piece-b-3 { top: 32%; right: 5%; left: auto; --piece-rot: 10deg; }
+.scatter-piece.piece-b-4 { top: 44%; right: 9%; left: auto; --piece-rot: -6deg; }
+.scatter-piece.piece-b-5 { top: 56%; right: 7%; left: auto; --piece-rot: 9deg; }
+.scatter-piece.piece-b-6 { top: 68%; right: 11%; left: auto; --piece-rot: -7deg; }
+.scatter-piece.piece-b-7 { top: 80%; right: 5%; left: auto; --piece-rot: 11deg; }
+.scatter-piece.piece-b-8 { top: 92%; right: 8%; left: auto; --piece-rot: -5deg; }
+
+/* Chezz screens: black pieces left, white pieces right (Pool keeps default above). */
+.game-scatter--chezz .scatter-piece.piece-b-1 { top: 8%; left: 6%; right: auto; --piece-rot: -12deg; }
+.game-scatter--chezz .scatter-piece.piece-b-2 { top: 20%; left: 10%; right: auto; --piece-rot: 8deg; }
+.game-scatter--chezz .scatter-piece.piece-b-3 { top: 32%; left: 5%; right: auto; --piece-rot: -10deg; }
+.game-scatter--chezz .scatter-piece.piece-b-4 { top: 44%; left: 9%; right: auto; --piece-rot: 6deg; }
+.game-scatter--chezz .scatter-piece.piece-b-5 { top: 56%; left: 7%; right: auto; --piece-rot: -9deg; }
+.game-scatter--chezz .scatter-piece.piece-b-6 { top: 68%; left: 11%; right: auto; --piece-rot: 7deg; }
+.game-scatter--chezz .scatter-piece.piece-b-7 { top: 80%; left: 5%; right: auto; --piece-rot: -11deg; }
+.game-scatter--chezz .scatter-piece.piece-b-8 { top: 92%; left: 8%; right: auto; --piece-rot: 5deg; }
+.game-scatter--chezz .scatter-piece.piece-w-1 { top: 8%; right: 6%; left: auto; --piece-rot: 12deg; }
+.game-scatter--chezz .scatter-piece.piece-w-2 { top: 20%; right: 10%; left: auto; --piece-rot: -8deg; }
+.game-scatter--chezz .scatter-piece.piece-w-3 { top: 32%; right: 5%; left: auto; --piece-rot: 10deg; }
+.game-scatter--chezz .scatter-piece.piece-w-4 { top: 44%; right: 9%; left: auto; --piece-rot: -6deg; }
+.game-scatter--chezz .scatter-piece.piece-w-5 { top: 56%; right: 7%; left: auto; --piece-rot: 9deg; }
+.game-scatter--chezz .scatter-piece.piece-w-6 { top: 68%; right: 11%; left: auto; --piece-rot: -7deg; }
+.game-scatter--chezz .scatter-piece.piece-w-7 { top: 80%; right: 5%; left: auto; --piece-rot: 11deg; }
+.game-scatter--chezz .scatter-piece.piece-w-8 { top: 92%; right: 8%; left: auto; --piece-rot: -5deg; }

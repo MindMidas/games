@@ -1,0 +1,78 @@
+:root {
+  --shell-bg:           #12161c;
+  --shell-bg-elev1:     #1a2129;
+  --shell-bg-elev2:     #242d38;
+  --shell-border:       #3a4554;
+  --shell-border-strong:#4d5a6c;
+  --shell-fg:           #eef1f5;
+  --shell-fg-muted:     #a8b2c0;
+
+  --color-primary:        #22ad63;
+  --color-primary-hover:  #35cc79;
+  --color-primary-fg:     #04140b;
+  --color-secondary:      #4ade80;
+  --color-accent:         #6ee7b7;
+  --color-accent-weak:    #2a3d34;
+
+  /* Full-screen Chezz field: lobby + in-game arena (panels stay --shell-* neutral) */
+  --page-bg-linear: linear-gradient(145deg, #35cc79 0%, #22ad63 44%, #0a5c32 100%);
+  --page-bg-glow-a: rgba(110, 231, 183, 0.4);
+  --page-bg-glow-b: rgba(52, 211, 153, 0.34);
+  --page-bg-glow-c: rgba(10, 92, 55, 0.28);
+
+  --arena-bg-linear: var(--page-bg-linear);
+  --arena-bg-glow-a: var(--page-bg-glow-a);
+  --arena-bg-glow-b: var(--page-bg-glow-b);
+  --arena-bg-glow-c: var(--page-bg-glow-c);
+
+  /* Board square colors (Chezz arena) */
+  --board-light: #e7d9b7;
+  --board-dark: #4b775d;
+  --light-square: var(--board-light);
+  --dark-square: var(--board-dark);
+  --board-highlight-selected: #4f8dff;
+  --selected: var(--board-highlight-selected);
+
+  --color-bg:        var(--shell-bg);
+  --color-bg-elev1:  var(--shell-bg-elev1);
+  --color-bg-elev2:  var(--shell-bg-elev2);
+  --color-border:    var(--shell-border);
+  --color-fg:        var(--shell-fg);
+  --color-fg-muted:  var(--shell-fg-muted);
+  --color-fg-faint:  rgba(168, 178, 192, 0.55);
+
+  --color-success:  #3eb86b;
+  --color-warning:  #e5b896;
+  --color-error:    #ee4343;
+  --color-info:     #4f8dff;
+
+  --clock-bg:         linear-gradient(180deg, #242d38 0%, #1a2129 100%);
+  --clock-bg-active:  linear-gradient(180deg, #2a3d4a 0%, #1f2e36 100%);
+  --clock-fg:         #a8b2c0;
+  --clock-fg-active:  #eef1f5;
+
+  --radius-sm:    6px;
+  --radius-md:    10px;
+  --radius-lg:    14px;
+  --radius-pill:  999px;
+
+  --shadow-sm:  0 4px 8px rgba(0, 0, 0, 0.22);
+  --shadow-md:  0 10px 24px rgba(0, 0, 0, 0.28);
+  --shadow-lg:  0 18px 40px rgba(0, 0, 0, 0.32);
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+
+  --font-mono:        "JetBrains Mono", "IBM Plex Mono", Menlo, Consolas, monospace;
+  --font-display:     "DM Sans", system-ui, sans-serif;
+  --font-size-base:   16px;
+}
+
+[data-theme="night"] {
+}
